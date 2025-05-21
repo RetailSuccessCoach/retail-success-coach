@@ -1,8 +1,8 @@
-// app/profit-performance-call/page.tsx
+// File: /app/profit-performance-call/page.tsx
 
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import { ScaleHeading } from "@/components/ui/ScaleHeading";
 import { ScaleButton } from "@/components/ui/ScaleButton";
@@ -10,17 +10,37 @@ import { Container } from "@/components/ui/Container";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle } from "lucide-react";
 
-// ...rest of your component code
-
 export default function DiscoveryCallPage() {
-  const [formState, setFormState] = useState<"idle" | "success">("idle");
+  const [form, setForm] = useState({ name: "", email: "", brand: "", message: "" });
+  const [formState, setFormState] = useState<"idle" | "success" | "loading">("idle");
 
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://asset-tidycal.b-cdn.net/js/embed.js";
-    script.async = true;
-    document.body.appendChild(script);
-  }, []);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormState("loading");
+    try {
+      const res = await fetch("/api/book-call", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      const result = await res.json();
+      if (result.success) {
+        setFormState("success");
+      } else {
+        alert("Something went wrong: " + result.error);
+        setFormState("idle");
+      }
+    } catch (err) {
+      console.error("Error submitting form:", err);
+      alert("There was a problem booking your call. Please try again.");
+      setFormState("idle");
+    }
+  };
 
   return (
     <MainLayout>
@@ -44,12 +64,58 @@ export default function DiscoveryCallPage() {
                   No pressure, just clarity - and a better view of your profit path.
                 </p>
 
-                <div className="mt-10 max-w-xl mx-auto">
-                  <div
-                    className="tidycal-embed"
-                    data-path="laurenpercival/15-minute-meeting"
-                  ></div>
-                </div>
+                <form onSubmit={handleSubmit} className="mt-10 max-w-xl mx-auto space-y-6 text-left">
+                  <div>
+                    <label className="block text-sm font-medium text-zinc-400 mb-1">Name</label>
+                    <input
+                      name="name"
+                      type="text"
+                      required
+                      value={form.name}
+                      onChange={handleChange}
+                      className="w-full bg-zinc-800 text-white px-4 py-3 rounded-md border border-zinc-700 focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-zinc-400 mb-1">Email</label>
+                    <input
+                      name="email"
+                      type="email"
+                      required
+                      value={form.email}
+                      onChange={handleChange}
+                      className="w-full bg-zinc-800 text-white px-4 py-3 rounded-md border border-zinc-700 focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-zinc-400 mb-1">Brand / Website</label>
+                    <input
+                      name="brand"
+                      type="text"
+                      required
+                      value={form.brand}
+                      onChange={handleChange}
+                      className="w-full bg-zinc-800 text-white px-4 py-3 rounded-md border border-zinc-700 focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-zinc-400 mb-1">Optional Message</label>
+                    <textarea
+                      name="message"
+                      rows={4}
+                      value={form.message}
+                      onChange={handleChange}
+                      className="w-full bg-zinc-800 text-white px-4 py-3 rounded-md border border-zinc-700 focus:outline-none"
+                    ></textarea>
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={formState === "loading"}
+                    className="w-full bg-white text-black font-semibold py-3 rounded-md hover:bg-zinc-200 transition disabled:opacity-50"
+                  >
+                    {formState === "loading" ? "Booking..." : "Submit Request"}
+                  </button>
+                </form>
               </motion.div>
             )}
           </AnimatePresence>
