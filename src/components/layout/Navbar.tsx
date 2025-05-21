@@ -1,3 +1,4 @@
+// File: Navbar.tsx
 "use client";
 
 import { useState, useEffect } from "react";
@@ -79,11 +80,9 @@ export default function Navbar() {
                             key={section.title}
                             className="w-[calc(50%-1.5rem)] border-b border-zinc-200 pb-4"
                           >
-                            {section.title && (
-                              <p className="text-xs font-semibold text-black uppercase tracking-wide mb-2">
-                                {section.title}
-                              </p>
-                            )}
+                            <p className="text-xs font-semibold text-black uppercase tracking-wide mb-2">
+                              {section.title}
+                            </p>
                             <ul className="space-y-2">
                               {section.items.map((item) => (
                                 <li key={item.title}>
@@ -135,11 +134,77 @@ export default function Navbar() {
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="text-white p-2"
+              aria-label="Toggle mobile menu"
             >
               {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
         </div>
+
+        {/* Mobile Navigation */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="lg:hidden mt-4 bg-zinc-900 border border-zinc-700 rounded-xl p-4 space-y-6"
+            >
+              {navDropdowns.map((dropdown) => (
+                <div key={dropdown.title}>
+                  <p className="text-sm font-semibold text-white uppercase mb-2">
+                    {dropdown.title}
+                  </p>
+                  {dropdown.sections.map((section) => (
+                    <div key={section.title} className="mb-4">
+                      <p className="text-xs text-zinc-400 mb-1 uppercase tracking-wide">
+                        {section.title}
+                      </p>
+                      <ul className="space-y-1">
+                        {section.items.map((item) => (
+                          <li key={item.title}>
+                            <Link
+                              href={item.href}
+                              className="block text-zinc-200 hover:text-white text-sm"
+                            >
+                              {item.title}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              ))}
+
+              {/* Static Mobile Links */}
+              <div className="space-y-2 border-t border-zinc-700 pt-4">
+                <Link href="/digital-strategy-packages" className="block text-zinc-200 hover:text-white text-sm">
+                  Plans & Prices
+                </Link>
+                <Link href="/blog" className="block text-zinc-200 hover:text-white text-sm">
+                  Blog
+                </Link>
+                <Link href="/case-studies" className="block text-zinc-200 hover:text-white text-sm">
+                  Case Studies
+                </Link>
+                <Link href="/insights" className="block text-zinc-200 hover:text-white text-sm">
+                  Insights
+                </Link>
+              </div>
+
+              {/* Mobile CTA */}
+              <div className="pt-4 border-t border-zinc-700">
+                <Link
+                  href="/profit-performance-call"
+                  className="block w-full text-center bg-white text-black font-semibold py-3 rounded-md hover:bg-zinc-200 transition"
+                >
+                  Book a Call
+                </Link>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </motion.nav>
   );
