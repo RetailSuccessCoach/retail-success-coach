@@ -85,7 +85,7 @@ export default function WhyChannelyticsSection() {
           className="mt-12"
         >
           <a
-            href="/profit-strategy-call-for-retailers"
+            href="/profit-performance-call"
             className="inline-block px-6 py-3 rounded-full bg-white text-black font-semibold hover:bg-zinc-200 transition"
           >
             Book Your Retail Profit Planning Call →

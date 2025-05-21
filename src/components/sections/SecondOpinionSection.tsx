@@ -36,7 +36,7 @@ export default function SecondOpinionSection() {
           transition={{ duration: 0.6, delay: 0.4 }}
         >
           <Link
-            href="/book-call"
+            href="/profit-performance-call"
             className="inline-flex items-center px-6 py-3 rounded-full bg-white text-zinc-900 font-medium hover:bg-zinc-200 transition"
           >
             Book a Call
