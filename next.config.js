@@ -42,3 +42,14 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
+module.exports = {
+  async redirects() {
+    return [
+      {
+        source: '/digital-channel-performance-audit',
+        destination: '/second-opinion-audit',
+        permanent: true,
+      },
+    ];
+  },
+};
