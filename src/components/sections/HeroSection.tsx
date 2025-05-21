@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-// ✅ Move this OUTSIDE the component
 const words = [
   "Your Revenue Looks Strong. But Where’s the Profit?",
   "Is Your Q4 Plan Built to Scale Profitably?",
@@ -55,10 +54,10 @@ export default function HeroSection() {
 
     timeoutId = setTimeout(type, typingSpeed);
     return () => clearTimeout(timeoutId);
-  }, []); // ✅ No warning now
+  }, []);
 
   return (
-    <section className="relative overflow-hidden pt-28 pb-12 min-h-[70vh] flex items-center">
+    <section className="relative overflow-hidden pt-20 sm:pt-24 pb-12 min-h-[70vh] flex items-center">
       {/* Background gradient effects */}
       <div className="absolute inset-0 z-0">
         <div className="absolute left-1/4 top-1/4 w-[400px] h-[400px] rounded-full bg-purple-600/20 blur-3xl" />
@@ -67,10 +66,11 @@ export default function HeroSection() {
 
       <div className="container relative z-10 mx-auto px-4">
         <div className="max-w-2xl mx-auto">
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-            <span className="scale-gradient-text relative">
+          {/* Fixed height wrapper to avoid layout shift */}
+          <h1 className="min-h-[120px] sm:min-h-[80px] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+            <span className="scale-gradient-text relative inline-block">
               {typedText}
-              <span className="absolute right-0 h-full w-[2px] bg-white animate-blink" />
+              <span className="absolute right-0 top-0 h-full w-[2px] bg-white animate-blink" />
             </span>
           </h1>
 
@@ -78,7 +78,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-xl text-zinc-300 mb-8 max-w-3xl"
+            className="text-lg sm:text-xl text-zinc-300 mb-8 max-w-3xl"
           >
             We help founder-led brands unlock hidden profit by benchmarking performance, identifying margin leaks, and building data-backed plans that scale – sustainably.
           </motion.p>
@@ -87,7 +87,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="flex flex-wrap justify-center gap-4 mt-10 mb-12" // ⬅ Add `mb-10` here
+            className="flex flex-wrap justify-center gap-4 mt-10 mb-12"
           >
             <Link
               href="/profit-performance-call"
@@ -103,15 +103,14 @@ export default function HeroSection() {
             </Link>
           </motion.div>
 
+          <p className="text-sm text-zinc-400 font-medium mt-2 text-center">
+            The most successful brands plan Q4 with precision – not pressure.
+          </p>
 
-      <p className="text-sm text-zinc-400 font-medium mt-2 text-center">
-        The most successful brands plan Q4 with precision – not pressure.
-      </p>
-
-      <p className="text-zinc-400 text-sm mt-4 text-center">
-        Built for ambitious eCommerce brands turning over £10m+ – ready to scale with clarity, control, and commercial confidence.
-      </p>
-       </div>
+          <p className="text-zinc-400 text-sm mt-4 text-center">
+            Built for ambitious eCommerce brands turning over £10m+ – ready to scale with clarity, control, and commercial confidence.
+          </p>
+        </div>
       </div>
     </section>
   );
