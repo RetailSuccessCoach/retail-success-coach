@@ -10,11 +10,42 @@ import { Container } from "@/components/ui/Container";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle } from "lucide-react";
 
+const packageOptions = [
+  "Profit Pulse Check",
+  "Second-Opinion Audit",
+  "Profit Ratio Audit",
+  "LTV-Backed Scale Plan",
+  "Q4 Profit Planning Sprint",
+  "Revenue-to-Profit Blueprint",
+  "Essentials Launch Plan",
+  "Full-Funnel Profit Launch",
+  "Bespoke Investor Plan",
+];
+
+const turnoverRanges = [
+  "Startup (£0–100k)",
+  "£100k–500k",
+  "£500k–1m",
+  "£1m–5m",
+  "£5m–10m",
+  "£10m–25m",
+  "£25m–50m",
+  "£50m–100m",
+  "£100m+",
+];
+
 export default function DiscoveryCallPage() {
-  const [form, setForm] = useState({ name: "", email: "", brand: "", message: "" });
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    brand: "",
+    message: "",
+    package: "",
+    turnover: "",
+  });
   const [formState, setFormState] = useState<"idle" | "success" | "loading">("idle");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -97,6 +128,36 @@ export default function DiscoveryCallPage() {
                       onChange={handleChange}
                       className="w-full bg-zinc-800 text-white px-4 py-3 rounded-md border border-zinc-700 focus:outline-none"
                     />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-zinc-400 mb-1">Package of Interest</label>
+                    <select
+                      name="package"
+                      required
+                      value={form.package}
+                      onChange={handleChange}
+                      className="w-full bg-zinc-800 text-white px-4 py-3 rounded-md border border-zinc-700 focus:outline-none"
+                    >
+                      <option value="">Select a package</option>
+                      {packageOptions.map((option) => (
+                        <option key={option} value={option}>{option}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-zinc-400 mb-1">Approx. Annual Turnover</label>
+                    <select
+                      name="turnover"
+                      required
+                      value={form.turnover}
+                      onChange={handleChange}
+                      className="w-full bg-zinc-800 text-white px-4 py-3 rounded-md border border-zinc-700 focus:outline-none"
+                    >
+                      <option value="">Select your range</option>
+                      {turnoverRanges.map((range) => (
+                        <option key={range} value={range}>{range}</option>
+                      ))}
+                    </select>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-zinc-400 mb-1">Optional Message</label>
