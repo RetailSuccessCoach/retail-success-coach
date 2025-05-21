@@ -71,7 +71,7 @@ export default function ProfitPulseCheckPage() {
   {/* CTA */}
   <div className="bg-zinc-800 border border-zinc-700 rounded-xl p-5 sm:p-6 text-center">
     <p className="text-sm text-zinc-400 mb-3">
-      Starts from <span className="text-white font-medium">£295</span> for Shopify & GA4 brands
+      Starts from <span className="text-white font-medium">£295</span> for Shopify brands using GA4 and/or Triplewhale
     </p>
     <a
       href="/profit-pulse-check-call"
