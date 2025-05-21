@@ -40,7 +40,7 @@ const solutionsDropdown: NavDropdown = {
         {
           title: "Second-Opinion Audit",
           description: "A fresh pair of expert eyes on your agency or media setup",
-          href: "/second-opinion-channel-audit",
+          href: "/second-opinion-audit",
         },
         {
           title: "Profit Ratio Audit",
