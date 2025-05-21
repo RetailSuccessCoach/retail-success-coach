@@ -36,25 +36,45 @@ export default function ProfitPulseCheckPage() {
 
   {/* What’s Included */}
   <div className="bg-zinc-900 border border-zinc-700 rounded-xl p-5 sm:p-6">
-    <h2 className="text-xl font-semibold text-white mb-4">What’s Included:</h2>
-    <ul className="space-y-4 text-sm sm:text-base leading-relaxed">
-      <li>
-        <span className="font-semibold text-white">Instant Margin Snapshot:</span> We’ll calculate your <span className="text-white">Gross Profit Margin</span> and <span className="text-white">Net Profit Margin</span> so you know exactly where you stand.
-      </li>
-      <li>
-        <span className="font-semibold text-white">Quick Spend Efficiency Check:</span> Get a high-level look at <span className="text-white">Revenue vs. Key Costs</span> and spot inefficiencies fast.
-      </li>
-      <li>
-        <span className="font-semibold text-white">Top 1–2 Profit Moves:</span> Walk away with our top recommendations to boost profitability today.
-      </li>
-      <li>
-        <span className="font-semibold text-white">Clear, One-Page Summary:</span> A concise report that captures your key numbers and quick wins.
-      </li>
-      <li>
-        <span className="font-semibold text-white">15-Min Clarity Call:</span> A short walkthrough of your results – with space for quick-fire questions.
-      </li>
-    </ul>
+  <h2 className="text-xl font-semibold text-white mb-6">What’s Included:</h2>
+
+  <div className="space-y-5 text-sm sm:text-base leading-relaxed">
+    <div className="border-l-4 border-white pl-4">
+      <p className="text-white font-semibold mb-1">Instant Margin Snapshot</p>
+      <p className="text-zinc-300">
+        We’ll calculate your <span className="text-white">Gross Profit Margin</span> and <span className="text-white">Net Profit Margin</span> so you know exactly where you stand.
+      </p>
+    </div>
+
+    <div className="border-l-4 border-white pl-4">
+      <p className="text-white font-semibold mb-1">Quick Spend Efficiency Check</p>
+      <p className="text-zinc-300">
+        Get a high-level look at <span className="text-white">Revenue vs. Key Costs</span> and spot inefficiencies fast.
+      </p>
+    </div>
+
+    <div className="border-l-4 border-white pl-4">
+      <p className="text-white font-semibold mb-1">Top 1–2 Profit Moves</p>
+      <p className="text-zinc-300">
+        Walk away with our top recommendations to boost profitability today.
+      </p>
+    </div>
+
+    <div className="border-l-4 border-white pl-4">
+      <p className="text-white font-semibold mb-1">Clear, One-Page Summary</p>
+      <p className="text-zinc-300">
+        A concise report that captures your key numbers and quick wins.
+      </p>
+    </div>
+
+    <div className="border-l-4 border-white pl-4">
+      <p className="text-white font-semibold mb-1">15-Min Clarity Call</p>
+      <p className="text-zinc-300">
+        A short walkthrough of your results – with space for quick-fire questions.
+      </p>
+    </div>
   </div>
+</div>
 
   {/* Divider */}
   <div className="border-t border-zinc-700" />
