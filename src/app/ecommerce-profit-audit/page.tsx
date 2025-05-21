@@ -103,6 +103,7 @@ export default function ProfitPulseCheckPage() {
     >
       Book Your Profit Pulse Check →
     </a>
+
   </div>
 </section>
 
