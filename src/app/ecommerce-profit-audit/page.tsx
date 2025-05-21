@@ -17,14 +17,16 @@ export default function ProfitPulseCheckPage() {
         />
       </Head>
       <MainLayout>
-        <section className="py-16 px-4 sm:px-6 max-w-3xl mx-auto text-zinc-300 space-y-12">
-
+        <section
+  aria-label="Profit Pulse Check Information"
+  className="py-16 px-4 sm:px-6 max-w-3xl mx-auto text-zinc-300 space-y-12"
+>
   {/* Header */}
   <div className="space-y-4">
     <h1 className="text-3xl sm:text-4xl font-bold text-white leading-snug">
       Profit Pulse Check: Your Fast Track to Profit Clarity
     </h1>
-    <p className="text-base sm:text-lg">
+    <p className="text-base sm:text-lg leading-relaxed text-zinc-200">
       Need a quick gut check on how profitable your brand really is? The <strong>Profit Pulse Check</strong> delivers a fast, no-fluff snapshot of your financial health – so you can make smarter decisions, faster.
     </p>
   </div>
@@ -35,7 +37,7 @@ export default function ProfitPulseCheckPage() {
   {/* What’s Included */}
   <div className="bg-zinc-900 border border-zinc-700 rounded-xl p-5 sm:p-6">
     <h2 className="text-xl font-semibold text-white mb-4">What’s Included:</h2>
-    <ul className="space-y-4 text-sm sm:text-base">
+    <ul className="space-y-4 text-sm sm:text-base leading-relaxed">
       <li>
         <span className="font-semibold text-white">Instant Margin Snapshot:</span> We’ll calculate your <span className="text-white">Gross Profit Margin</span> and <span className="text-white">Net Profit Margin</span> so you know exactly where you stand.
       </li>
@@ -58,7 +60,7 @@ export default function ProfitPulseCheckPage() {
   <div className="border-t border-zinc-700" />
 
   {/* Audience */}
-  <div className="space-y-4 text-sm sm:text-base">
+  <div className="space-y-4 text-sm sm:text-base leading-relaxed text-zinc-200">
     <p>
       Built for fast-moving eCommerce teams – especially <strong>founder-led brands</strong>, <strong>Heads of Growth</strong>, or <strong>marketers delivering +£10m revenue</strong> looking to sharpen spend without a full audit.
     </p>
@@ -71,16 +73,19 @@ export default function ProfitPulseCheckPage() {
   {/* CTA */}
   <div className="bg-zinc-800 border border-zinc-700 rounded-xl p-5 sm:p-6 text-center">
     <p className="text-sm text-zinc-400 mb-3">
-      Starts from <span className="text-white font-medium">£295</span> for Shopify brands using GA4 and/or Triplewhale
+      Starts from <span className="text-white font-medium">£295</span> for Shopify & GA4 brands
     </p>
     <a
       href="/profit-pulse-check-call"
+      role="button"
+      aria-label="Book your Profit Pulse Check"
       className="inline-block px-6 py-3 bg-white text-black font-semibold rounded-full hover:bg-zinc-200 transition-colors"
     >
       Book Your Profit Pulse Check →
     </a>
   </div>
 </section>
+
 
       </MainLayout>
     </>
