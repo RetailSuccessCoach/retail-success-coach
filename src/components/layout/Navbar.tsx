@@ -16,7 +16,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      setScrolled(window.scrollY > 0);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -29,7 +29,7 @@ export default function Navbar() {
 
   return (
     <motion.nav
-      className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-sm border-b transition-colors duration-300 ${
+      className={`sticky top-0 z-50 backdrop-blur-sm border-b transition-colors duration-300 ${
         scrolled ? "bg-[#060506]/95 border-zinc-800" : "bg-[#060506]/30 border-transparent"
       }`}
       initial={{ y: -100 }}
@@ -107,7 +107,6 @@ export default function Navbar() {
               </div>
             ))}
 
-            {/* Static Top Links */}
             <Link href="/digital-strategy-packages" className="text-zinc-300 hover:text-white transition-colors">
               Plans & Prices
             </Link>
@@ -122,14 +121,12 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* CTA Button */}
           <div className="hidden lg:flex items-center space-x-4">
             <ScaleButton href="/profit-performance-call" variant="default" size="sm">
               Book a Call
             </ScaleButton>
           </div>
 
-          {/* Mobile Menu Button */}
           <div className="lg:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -145,63 +142,77 @@ export default function Navbar() {
         <AnimatePresence>
           {mobileMenuOpen && (
             <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="lg:hidden mt-4 bg-zinc-900 border border-zinc-700 rounded-xl p-4 space-y-6"
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 z-50 bg-black text-white px-6 py-10 overflow-y-auto"
             >
-              {navDropdowns.map((dropdown) => (
-                <div key={dropdown.title}>
-                  <p className="text-sm font-semibold text-white uppercase mb-2">
-                    {dropdown.title}
-                  </p>
-                  {dropdown.sections.map((section) => (
-                    <div key={section.title} className="mb-4">
-                      <p className="text-xs text-zinc-400 mb-1 uppercase tracking-wide">
-                        {section.title}
-                      </p>
-                      <ul className="space-y-1">
-                        {section.items.map((item) => (
-                          <li key={item.title}>
-                            <Link
-                              href={item.href}
-                              className="block text-zinc-200 hover:text-white text-sm"
-                            >
-                              {item.title}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
+              <div className="flex justify-between items-center mb-8">
+                <Image
+                  src="/Retail-Success-Logo.png"
+                  alt="Logo"
+                  width={140}
+                  height={32}
+                />
+                <button onClick={() => setMobileMenuOpen(false)} aria-label="Close menu">
+                  <X className="h-6 w-6 text-white" />
+                </button>
+              </div>
+
+              <nav className="space-y-8">
+                {navDropdowns.map((dropdown) => (
+                  <div key={dropdown.title}>
+                    <p className="text-sm uppercase font-semibold text-zinc-400 mb-3">
+                      {dropdown.title}
+                    </p>
+                    {dropdown.sections.map((section) => (
+                      <div key={section.title} className="mb-4">
+                        <p className="text-xs uppercase text-zinc-500 tracking-wide mb-2">
+                          {section.title}
+                        </p>
+                        <ul className="space-y-1">
+                          {section.items.map((item) => (
+                            <li key={item.title}>
+                              <Link
+                                href={item.href}
+                                className="block text-lg font-bold text-white py-2 hover:text-zinc-300"
+                                onClick={() => setMobileMenuOpen(false)}
+                              >
+                                {item.title}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+
+                <div className="border-t border-zinc-700 pt-6 space-y-3">
+                  <Link href="/digital-strategy-packages" className="block text-lg font-bold text-white hover:text-zinc-300">
+                    Plans & Prices
+                  </Link>
+                  <Link href="/blog" className="block text-lg font-bold text-white hover:text-zinc-300">
+                    Blog
+                  </Link>
+                  <Link href="/case-studies" className="block text-lg font-bold text-white hover:text-zinc-300">
+                    Case Studies
+                  </Link>
+                  <Link href="/insights" className="block text-lg font-bold text-white hover:text-zinc-300">
+                    Insights
+                  </Link>
                 </div>
-              ))}
 
-              {/* Static Mobile Links */}
-              <div className="space-y-2 border-t border-zinc-700 pt-4">
-                <Link href="/digital-strategy-packages" className="block text-zinc-200 hover:text-white text-sm">
-                  Plans & Prices
-                </Link>
-                <Link href="/blog" className="block text-zinc-200 hover:text-white text-sm">
-                  Blog
-                </Link>
-                <Link href="/case-studies" className="block text-zinc-200 hover:text-white text-sm">
-                  Case Studies
-                </Link>
-                <Link href="/insights" className="block text-zinc-200 hover:text-white text-sm">
-                  Insights
-                </Link>
-              </div>
-
-              {/* Mobile CTA */}
-              <div className="pt-4 border-t border-zinc-700">
-                <Link
-                  href="/profit-performance-call"
-                  className="block w-full text-center bg-white text-black font-semibold py-3 rounded-md hover:bg-zinc-200 transition"
-                >
-                  Book a Call
-                </Link>
-              </div>
+                <div className="mt-10">
+                  <Link
+                    href="/profit-performance-call"
+                    className="block w-full text-center bg-white text-black font-semibold py-3 rounded-full hover:bg-zinc-200 transition"
+                  >
+                    Book a Call
+                  </Link>
+                </div>
+              </nav>
             </motion.div>
           )}
         </AnimatePresence>
