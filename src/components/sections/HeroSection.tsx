@@ -67,12 +67,13 @@ export default function HeroSection() {
       <div className="container relative z-10 mx-auto px-4">
         <div className="max-w-2xl mx-auto">
           {/* Fixed height wrapper to avoid layout shift */}
-          <h1 className="min-h-[120px] sm:min-h-[80px] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-            <span className="scale-gradient-text relative inline-block">
-              {typedText}
-              <span className="absolute right-0 top-0 h-full w-[2px] bg-white animate-blink" />
-            </span>
-          </h1>
+          <h1 className="h-[120px] sm:h-[100px] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight flex items-center justify-center text-center overflow-hidden">
+          <span className="scale-gradient-text relative inline-block">
+            {typedText}
+            <span className="absolute right-0 top-0 h-full w-[2px] bg-white animate-blink" />
+          </span>
+        </h1>
+
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
