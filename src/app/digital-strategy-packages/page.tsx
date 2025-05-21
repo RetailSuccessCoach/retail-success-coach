@@ -186,62 +186,93 @@ const DigitalStrategyPackagesPage = () => {
             Whether you're stuck, scaling, or starting fresh - every plan here ties your growth goals to your bottom line.
           </p>
 
-          {packages.map((section) => (
-            <div key={section.title} className="mt-12">
-              <h2 className="text-2xl font-semibold text-white mb-2">{section.title}</h2>
-              <p className="text-zinc-400 mb-4">{section.description}</p>
+              {packages.map((section) => (
+      <div key={section.title} className="mt-12">
+        <h2 className="text-2xl font-semibold text-white mb-2">{section.title}</h2>
+        <p className="text-zinc-400 mb-4">{section.description}</p>
 
-              <div className="overflow-x-auto">
-                <table className="min-w-full table-fixed border border-zinc-700 text-left text-sm md:text-base">
-                  <thead className="bg-zinc-800 text-white">
+        {/* Desktop Table */}
+        <div className="hidden md:block overflow-x-auto">
+          <table className="min-w-full table-fixed border border-zinc-700 text-left text-sm md:text-base">
+            <thead className="bg-zinc-800 text-white">
+              <tr>
+                <th className="p-4 w-1/6">Package</th>
+                <th className="p-4 w-1/12">Price</th>
+                <th className="p-4 w-1/5">Best For</th>
+                <th className="p-4 w-1/2">What You Get</th>
+                <th className="p-4 w-1/6">Availability</th>
+              </tr>
+            </thead>
+            <tbody className="text-zinc-300 divide-y divide-zinc-700">
+              {section.packages.map((pkg) => (
+                <React.Fragment key={pkg.name}>
+                  <tr>
+                    <td className="p-4 font-medium text-white">
+                      {pkg.link ? (
+                        <a href={pkg.link} className="underline hover:text-zinc-300">
+                          {pkg.name}
+                        </a>
+                      ) : (
+                        pkg.name
+                      )}
+                    </td>
+                    <td className="p-4">{pkg.price}</td>
+                    <td className="p-4">{pkg.bestFor}</td>
+                    <td className="p-4">
+                      <ul className="list-disc list-inside space-y-1">
+                        {pkg.items.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    </td>
+                    <td className="p-4 italic text-zinc-400">
+                      Discuss in discovery session
+                    </td>
+                  </tr>
+                  {pkg.testimonial && (
                     <tr>
-                      <th className="p-4 w-1/6">Package</th>
-                      <th className="p-4 w-1/12">Price</th>
-                      <th className="p-4 w-1/5">Best For</th>
-                      <th className="p-4 w-1/2">What You Get</th>
-                      <th className="p-4 w-1/6">Availability</th>
+                      <td colSpan={5} className="italic text-zinc-400 px-4 py-6">
+                        “{pkg.testimonial.quote}” <span className="not-italic">{pkg.testimonial.author}</span>
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody className="text-zinc-300 divide-y divide-zinc-700">
-                    {section.packages.map((pkg) => (
-                      <React.Fragment key={pkg.name}>
-                        <tr>
-                          <td className="p-4 font-medium text-white">
-                            {pkg.link ? (
-                              <a href={pkg.link} className="underline hover:text-zinc-300">
-                                {pkg.name}
-                              </a>
-                            ) : (
-                              pkg.name
-                            )}
-                          </td>
-                          <td className="p-4">{pkg.price}</td>
-                          <td className="p-4">{pkg.bestFor}</td>
-                          <td className="p-4">
-                            <ul className="list-disc list-inside space-y-1">
-                              {pkg.items.map((item) => (
-                                <li key={item}>{item}</li>
-                              ))}
-                            </ul>
-                          </td>
-                          <td className="p-4 italic text-zinc-400">
-                            Discuss in discovery session
-                          </td>
-                        </tr>
-                        {pkg.testimonial && (
-                          <tr>
-                            <td colSpan={5} className="italic text-zinc-400 px-4 py-6">
-                              “{pkg.testimonial.quote}” <span className="not-italic">{pkg.testimonial.author}</span>
-                            </td>
-                          </tr>
-                        )}
-                      </React.Fragment>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                  )}
+                </React.Fragment>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Mobile Cards */}
+        <div className="md:hidden space-y-6">
+          {section.packages.map((pkg) => (
+            <div key={pkg.name} className="border border-zinc-700 rounded-xl p-4 bg-zinc-900">
+              <h3 className="text-lg font-semibold text-white mb-1">{pkg.name} <span className="text-zinc-400 font-normal">({pkg.price})</span></h3>
+              <p className="text-sm text-zinc-300 italic mb-3">{pkg.bestFor}</p>
+              <ul className="list-disc list-inside text-sm text-zinc-300 space-y-1 mb-4">
+                {pkg.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+              {pkg.link && (
+                <a
+                  href={pkg.link}
+                  className="inline-block mt-2 text-sm font-semibold text-white border border-white rounded-full px-4 py-2 hover:bg-white hover:text-black transition-colors"
+                >
+                  View Package →
+                </a>
+              )}
+              {pkg.testimonial && (
+                <p className="mt-4 text-sm text-zinc-400 italic border-t border-zinc-700 pt-3">
+                  “{pkg.testimonial.quote}” <br />
+                  <span className="not-italic">{pkg.testimonial.author}</span>
+                </p>
+              )}
             </div>
           ))}
+        </div>
+      </div>
+    ))}
+
 
           <div className="mt-16 text-center">
             <h3 className="text-xl font-semibold text-white mb-4">
