@@ -62,7 +62,7 @@ export default function HowItWorksPage() {
               </div>
 
               <p className="text-zinc-400 mt-6">
-                This ensures we leave no stone unturned — and eliminates the delays, follow-ups, or gaps that come from chasing access partway through a brief.
+                This ensures we leave no stone unturned - and eliminates the delays, follow-ups, or gaps that come from chasing access partway through a brief.
               </p>
             </div>
 
@@ -72,10 +72,10 @@ export default function HowItWorksPage() {
                 All client data is treated with absolute confidentiality. Your files and platform access are stored securely in a closed server environment. No shared Google Drives. No third-party contractors. No data leaves our ecosystem.
               </p>
               <p className="text-zinc-400 mt-3">
-                In line with GDPR compliance, all access is revoked and all stored data is securely deleted within <strong>60 days</strong> of final delivery — unless otherwise requested or contractually agreed. We can also delete data immediately on request.
+                In line with GDPR compliance, all access is revoked and all stored data is securely deleted within <strong>60 days</strong> of final delivery - unless otherwise requested or contractually agreed. We can also delete data immediately on request.
               </p>
               <p className="text-zinc-400 mt-3">
-                NDAs are included by default, with bespoke confidentiality clauses available on request. Your financial and commercial data is never shared, recycled, or reused — ever.
+                NDAs are included by default, with bespoke confidentiality clauses available on request. Your financial and commercial data is never shared, recycled, or reused - ever.
               </p>
             </div>
 
@@ -85,7 +85,7 @@ export default function HowItWorksPage() {
                 Once access is confirmed, your audit or strategic plan begins. We ask smart questions, verify what the data is really saying, and create a clear narrative that cuts through the noise.
               </p>
               <p className="text-zinc-400 mt-3">
-                Expect a complete margin-first, channel-specific, full-funnel analysis — tailored to your growth stage, commercial model, and team setup.
+                Expect a complete margin-first, channel-specific, full-funnel analysis - tailored to your growth stage, commercial model, and team setup.
               </p>
             </div>
 
@@ -112,7 +112,7 @@ export default function HowItWorksPage() {
                 We do things properly. That means no blurred lines, no assumptions, and no surface-level reporting. Every interaction, insight and deliverable is built with care, precision, and respect.
               </p>
               <p className="text-zinc-400 mt-3">
-                Your business isn’t ordinary — so our process never is. If you want a partner who brings clarity, protects your data, and thinks two steps ahead, you’re in the right place.
+                Your business isn’t ordinary - so our process never is. If you want a partner who brings clarity, protects your data, and thinks two steps ahead, you’re in the right place.
               </p>
             </div>
           </div>
