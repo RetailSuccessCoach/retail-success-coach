@@ -96,7 +96,7 @@ export default function ProfitPulseCheckPage() {
       Starts from <span className="text-white font-medium">£295</span> for Shopify & GA4 brands
     </p>
     <a
-      href="/profit-pulse-check-call"
+      href="/profit-performance-call"
       role="button"
       aria-label="Book your Profit Pulse Check"
       className="inline-block px-6 py-3 bg-white text-black font-semibold rounded-full hover:bg-zinc-200 transition-colors"
