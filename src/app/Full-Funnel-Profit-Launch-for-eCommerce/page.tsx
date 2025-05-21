@@ -17,70 +17,100 @@ export default function FullFunnelProfitLaunchPage() {
         />
       </Head>
       <MainLayout>
-        <section className="py-16 px-6 max-w-4xl mx-auto">
-          <h1 className="text-4xl font-bold mb-4">
-            Full-Funnel Profit Launch: Scale Smarter from Day One
-          </h1>
-          <p className="text-lg text-zinc-300 mb-6">
-            This isn’t just a launch - it’s the blueprint for profitable growth from first click to long-term loyalty. Our <strong>Full-Funnel Profit Launch</strong> helps you master CAC, sharpen your narrative, and optimise every step of your funnel.
-          </p>
+        <section
+          aria-label="Full-Funnel Profit Launch Information"
+          className="py-16 px-4 sm:px-6 max-w-3xl mx-auto text-zinc-300 space-y-12"
+        >
+          {/* Header */}
+          <div className="space-y-4">
+            <h1 className="text-3xl sm:text-4xl font-bold text-white leading-snug">
+              Full-Funnel Profit Launch: Scale Smarter from Day One
+            </h1>
+            <p className="text-base sm:text-lg leading-relaxed text-zinc-200">
+              This isn’t just a launch – it’s the blueprint for profitable growth from first click to long-term loyalty. Our <strong>Full-Funnel Profit Launch</strong> helps you master CAC, sharpen your narrative, and optimise every step of your funnel.
+            </p>
+          </div>
 
-          <h2 className="text-2xl font-semibold mt-8 mb-2">What You’ll Get:</h2>
-          <ul className="list-disc list-inside text-zinc-400 space-y-2">
-            <li>
-              <span className="font-semibold text-white">Audience Segmentation & Value Targeting:</span>{" "}
-              Understand your ideal customer by behaviour, spend, and LTV potential.
-            </li>
-            <li>
-              <span className="font-semibold text-white">Market & Competitor Landscape:</span>{" "}
-              Identify your biggest opportunities and how to position for growth.
-            </li>
-            <li>
-              <span className="font-semibold text-white">Full Go-to-Market Strategy (Shopify Focus):</span>{" "}
-              Acquisition, conversion, retention - mapped from day one.
-            </li>
-            <li>
-              <span className="font-semibold text-white">Multi-Channel CAC Targeting & GA4 Setup:</span>{" "}
-              Aggressive but achievable CAC goals, tracked in real time.
-            </li>
-            <li>
-              <span className="font-semibold text-white">Conversion Rate Optimisation (CRO):</span>{" "}
-              Funnel-wide tactics to turn traffic into profit.
-            </li>
-            <li>
-              <span className="font-semibold text-white">Early Loyalty & Retention Framework:</span>{" "}
-              Drive repeat purchases and build habits from first order.
-            </li>
-            <li>
-              <span className="font-semibold text-white">Investor-Grade Forecasts & KPIs:</span>{" "}
-              Build trust with credible projections and proof of scalability.
-            </li>
-            <li>
-              <span className="font-semibold text-white">Ongoing Strategy Support:</span>{" "}
-              Implementation guidance and strategic direction through launch.
-            </li>
-          </ul>
+          {/* Divider */}
+          <div className="border-t border-zinc-700" />
 
-          <p className="mt-6 text-zinc-300">
-            Ideal for <strong>new eCommerce brands</strong> looking to launch profit-first, <strong>founders raising capital</strong>, or <strong>product teams</strong> debuting new ranges. Built specifically for <span className="text-white">Shopify</span> and <span className="text-white">GA4</span>.
-          </p>
+          {/* What You’ll Get */}
+          <div className="bg-zinc-900 border border-zinc-700 rounded-xl p-5 sm:p-6">
+            <h2 className="text-xl font-semibold text-white mb-6">What You’ll Get:</h2>
 
-          <p className="mt-6 text-zinc-300">
-            Need integrations, custom dashboards or complex modelling? We'll scope it and quote accordingly.
-          </p>
+            <div className="space-y-5 text-sm sm:text-base leading-relaxed">
+              <div className="border-l-4 border-white pl-4">
+                <p className="text-white font-semibold mb-1">Audience Segmentation & Value Targeting</p>
+                <p className="text-zinc-300">Understand your ideal customer by behaviour, spend, and LTV potential.</p>
+              </div>
 
-          <div className="mt-8">
-            <p className="text-zinc-300 text-sm mb-2">
+              <div className="border-l-4 border-white pl-4">
+                <p className="text-white font-semibold mb-1">Market & Competitor Landscape</p>
+                <p className="text-zinc-300">Identify your biggest opportunities and how to position for growth.</p>
+              </div>
+
+              <div className="border-l-4 border-white pl-4">
+                <p className="text-white font-semibold mb-1">Full Go-to-Market Strategy (Shopify Focus)</p>
+                <p className="text-zinc-300">Acquisition, conversion, retention – mapped from day one.</p>
+              </div>
+
+              <div className="border-l-4 border-white pl-4">
+                <p className="text-white font-semibold mb-1">Multi-Channel CAC Targeting & GA4 Setup</p>
+                <p className="text-zinc-300">Aggressive but achievable CAC goals, tracked in real time.</p>
+              </div>
+
+              <div className="border-l-4 border-white pl-4">
+                <p className="text-white font-semibold mb-1">Conversion Rate Optimisation (CRO)</p>
+                <p className="text-zinc-300">Funnel-wide tactics to turn traffic into profit.</p>
+              </div>
+
+              <div className="border-l-4 border-white pl-4">
+                <p className="text-white font-semibold mb-1">Early Loyalty & Retention Framework</p>
+                <p className="text-zinc-300">Drive repeat purchases and build habits from first order.</p>
+              </div>
+
+              <div className="border-l-4 border-white pl-4">
+                <p className="text-white font-semibold mb-1">Investor-Grade Forecasts & KPIs</p>
+                <p className="text-zinc-300">Build trust with credible projections and proof of scalability.</p>
+              </div>
+
+              <div className="border-l-4 border-white pl-4">
+                <p className="text-white font-semibold mb-1">Ongoing Strategy Support</p>
+                <p className="text-zinc-300">Implementation guidance and strategic direction through launch.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div className="border-t border-zinc-700" />
+
+          {/* Audience */}
+          <div className="space-y-4 text-sm sm:text-base leading-relaxed text-zinc-200">
+            <p>
+              Ideal for <strong>new eCommerce brands</strong> looking to launch profit-first, <strong>founders raising capital</strong>, or <strong>product teams</strong> debuting new ranges. Built specifically for <span className="text-white">Shopify</span> and <span className="text-white">GA4</span>.
+            </p>
+
+            <p>
+              Need integrations, custom dashboards or complex modelling? We’ll scope it and quote accordingly.
+            </p>
+          </div>
+
+          {/* CTA */}
+          <div className="bg-zinc-800 border border-zinc-700 rounded-xl p-5 sm:p-6 text-center">
+            <p className="text-sm text-zinc-400 mb-3">
               One-off investment: <span className="text-white font-medium">£6,950</span>
             </p>
             <a
               href="/full-funnel-profit-launch-call"
-              className="inline-block px-6 py-3 bg-white text-black font-medium rounded-md hover:bg-zinc-200 transition"
+              role="button"
+              aria-label="Discuss your Full-Funnel Profit Launch"
+              className="inline-block px-6 py-3 bg-white text-black font-semibold rounded-full hover:bg-zinc-200 transition-colors"
             >
-              Discuss Your Full-Funnel Profit Launch
+              Discuss Your Full-Funnel Profit Launch →
             </a>
           </div>
         </section>
+
       </MainLayout>
     </>
   );
