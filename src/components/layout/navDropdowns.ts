@@ -1,4 +1,4 @@
-// navDropdowns.ts — The Retail Success Coach navigation structure
+// navDropdowns.ts - The Retail Success Coach navigation structure
 
 export type DropdownItem = {
   title: string;
@@ -40,7 +40,7 @@ const solutionsDropdown: NavDropdown = {
         {
           title: "Second-Opinion Audit",
           description: "A fresh pair of expert eyes on your agency or media setup",
-          href: "/second-opinion-audit",
+          href: "/second-opinion-channel-audit",
         },
         {
           title: "Profit Ratio Audit",
