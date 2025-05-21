@@ -17,70 +17,100 @@ export default function BespokeInvestorPlanPage() {
         />
       </Head>
       <MainLayout>
-        <section className="py-16 px-6 max-w-4xl mx-auto">
-          <h1 className="text-4xl font-bold mb-4">
-            Bespoke Investor Plan: Capital-Ready Strategy for High-Growth Brands
-          </h1>
-          <p className="text-lg text-zinc-300 mb-6">
-            Raising capital or scaling fast? Your growth plan needs to impress investors and perform commercially. Our <strong>Bespoke Investor Plan</strong> is a high-touch strategy engagement, built to show your business is ready for investment and structured for scale.
-          </p>
+        <section
+          aria-label="Bespoke Investor Plan Information"
+          className="py-16 px-4 sm:px-6 max-w-3xl mx-auto text-zinc-300 space-y-12"
+        >
+          {/* Header */}
+          <div className="space-y-4">
+            <h1 className="text-3xl sm:text-4xl font-bold text-white leading-snug">
+              Bespoke Investor Plan: Capital-Ready Strategy for High-Growth Brands
+            </h1>
+            <p className="text-base sm:text-lg leading-relaxed text-zinc-200">
+              Raising capital or scaling fast? Your growth plan needs to impress investors and perform commercially. Our <strong>Bespoke Investor Plan</strong> is a high-touch strategy engagement, built to show your business is ready for investment and structured for scale.
+            </p>
+          </div>
 
-          <h2 className="text-2xl font-semibold mt-8 mb-2">What’s Included:</h2>
-          <ul className="list-disc list-inside text-zinc-400 space-y-2">
-            <li>
-              <span className="font-semibold text-white">Investor-Ready Due Diligence:</span>{" "}
-              Detailed market, competitive, and business model analysis to support a compelling investment case.
-            </li>
-            <li>
-              <span className="font-semibold text-white">Tailored Full-Funnel Strategy:</span>{" "}
-              Customised growth roadmap covering acquisition, conversion, and retention - optimised for Shopify and beyond.
-            </li>
-            <li>
-              <span className="font-semibold text-white">CAC Modelling & ROI Forecasting:</span>{" "}
-              Precision modelling across all paid channels using <span className="text-white">GA4</span> and advanced attribution frameworks.
-            </li>
-            <li>
-              <span className="font-semibold text-white">Financial Forecasts & Profit Modelling:</span>{" "}
-              Revenue, CAC, LTV, EBITDA and payback period forecasting tailored for investor scrutiny.
-            </li>
-            <li>
-              <span className="font-semibold text-white">Pitch Deck Advisory:</span>{" "}
-              Support with structure, narrative, and performance proof for your investor materials.
-            </li>
-            <li>
-              <span className="font-semibold text-white">Capital Allocation Guidance:</span>{" "}
-              Plan for how investment will drive ROI across people, product and performance channels.
-            </li>
-            <li>
-              <span className="font-semibold text-white">Investor Comms Support:</span>{" "}
-              Ongoing advisory for investor updates, reporting, and pre-close conversations.
-            </li>
-            <li>
-              <span className="font-semibold text-white">Tailored to Your Tech Stack & Objectives:</span>{" "}
-              Whether you’re on Shopify, headless, or blended DTC + B2B - we match the complexity and pace of your brand.
-            </li>
-          </ul>
+          {/* Divider */}
+          <div className="border-t border-zinc-700" />
 
-          <p className="mt-6 text-zinc-300">
-            Best suited for <strong>eCommerce brands preparing for capital raises</strong>, <strong>high-growth teams</strong> seeking clarity and control, and <strong>founders needing investor-ready forecasts and strategy</strong>. This is our most customised offer - designed around your stack, story and scaling plan.
-          </p>
+          {/* What You’ll Get */}
+          <div className="bg-zinc-900 border border-zinc-700 rounded-xl p-5 sm:p-6">
+            <h2 className="text-xl font-semibold text-white mb-6">What You’ll Get:</h2>
 
-          <p className="mt-6 text-zinc-300">
-            If you’re launching something big or raising seriously, this is the plan for you.
-          </p>
+            <div className="space-y-5 text-sm sm:text-base leading-relaxed">
+              <div className="border-l-4 border-white pl-4">
+                <p className="text-white font-semibold mb-1">Investor-Ready Due Diligence</p>
+                <p className="text-zinc-300">Detailed market, competitive, and business model analysis to support a compelling investment case.</p>
+              </div>
 
-          <div className="mt-8">
-            <p className="text-zinc-300 text-sm mb-2">
+              <div className="border-l-4 border-white pl-4">
+                <p className="text-white font-semibold mb-1">Tailored Full-Funnel Strategy</p>
+                <p className="text-zinc-300">Customised growth roadmap covering acquisition, conversion, and retention – optimised for Shopify and beyond.</p>
+              </div>
+
+              <div className="border-l-4 border-white pl-4">
+                <p className="text-white font-semibold mb-1">CAC Modelling & ROI Forecasting</p>
+                <p className="text-zinc-300">Precision modelling across all paid channels using <span className="text-white">GA4</span> and advanced attribution frameworks.</p>
+              </div>
+
+              <div className="border-l-4 border-white pl-4">
+                <p className="text-white font-semibold mb-1">Financial Forecasts & Profit Modelling</p>
+                <p className="text-zinc-300">Revenue, CAC, LTV, EBITDA and payback period forecasting tailored for investor scrutiny.</p>
+              </div>
+
+              <div className="border-l-4 border-white pl-4">
+                <p className="text-white font-semibold mb-1">Pitch Deck Advisory</p>
+                <p className="text-zinc-300">Support with structure, narrative, and performance proof for your investor materials.</p>
+              </div>
+
+              <div className="border-l-4 border-white pl-4">
+                <p className="text-white font-semibold mb-1">Capital Allocation Guidance</p>
+                <p className="text-zinc-300">Plan for how investment will drive ROI across people, product, and performance channels.</p>
+              </div>
+
+              <div className="border-l-4 border-white pl-4">
+                <p className="text-white font-semibold mb-1">Investor Comms Support</p>
+                <p className="text-zinc-300">Ongoing advisory for investor updates, reporting, and pre-close conversations.</p>
+              </div>
+
+              <div className="border-l-4 border-white pl-4">
+                <p className="text-white font-semibold mb-1">Tailored to Your Tech Stack & Objectives</p>
+                <p className="text-zinc-300">Whether you’re on Shopify, headless, or blended DTC + B2B – we match the complexity and pace of your brand.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div className="border-t border-zinc-700" />
+
+          {/* Audience */}
+          <div className="space-y-4 text-sm sm:text-base leading-relaxed text-zinc-200">
+            <p>
+              Best suited for <strong>eCommerce brands preparing for capital raises</strong>, <strong>high-growth teams</strong> seeking clarity and control, and <strong>founders needing investor-ready forecasts and strategy</strong>. This is our most customised offer – designed around your stack, story and scaling plan.
+            </p>
+
+            <p>
+              If you’re launching something big or raising seriously, this is the plan for you.
+            </p>
+          </div>
+
+          {/* CTA */}
+          <div className="bg-zinc-800 border border-zinc-700 rounded-xl p-5 sm:p-6 text-center">
+            <p className="text-sm text-zinc-400 mb-3">
               Starting from <span className="text-white font-medium">£9,950</span>
             </p>
             <a
               href="/bespoke-investor-plan-call"
-              className="inline-block px-6 py-3 bg-white text-black font-medium rounded-md hover:bg-zinc-200 transition"
+              role="button"
+              aria-label="Discuss your Bespoke Investor Plan"
+              className="inline-block px-6 py-3 bg-white text-black font-semibold rounded-full hover:bg-zinc-200 transition-colors"
             >
-              Discuss Your Bespoke Investor Plan
+              Discuss Your Bespoke Investor Plan →
             </a>
           </div>
         </section>
+
       </MainLayout>
     </>
   );
