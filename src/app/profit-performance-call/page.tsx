@@ -1,5 +1,3 @@
-// File: /app/profit-performance-call/page.tsx
-
 "use client";
 
 import { useState } from "react";
@@ -45,7 +43,9 @@ export default function DiscoveryCallPage() {
   });
   const [formState, setFormState] = useState<"idle" | "success" | "loading">("idle");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -140,7 +140,9 @@ export default function DiscoveryCallPage() {
                     >
                       <option value="">Select a package</option>
                       {packageOptions.map((option) => (
-                        <option key={option} value={option}>{option}</option>
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
                       ))}
                     </select>
                   </div>
@@ -155,7 +157,9 @@ export default function DiscoveryCallPage() {
                     >
                       <option value="">Select your range</option>
                       {turnoverRanges.map((range) => (
-                        <option key={range} value={range}>{range}</option>
+                        <option key={range} value={range}>
+                          {range}
+                        </option>
                       ))}
                     </select>
                   </div>
@@ -201,7 +205,8 @@ function SuccessView() {
         Thank You!
       </ScaleHeading>
       <p className="text-zinc-300 mb-8 max-w-lg mx-auto">
-        Your call is booked. I’m looking forward to helping you connect your marketing metrics to margin and make smarter, more profitable decisions.
+        Your call is booked. I’m looking forward to helping you connect your marketing metrics to margin and make
+        smarter, more profitable decisions.
       </p>
       <div className="flex flex-col md:flex-row gap-4 justify-center">
         <ScaleButton href="/" variant="secondary">
