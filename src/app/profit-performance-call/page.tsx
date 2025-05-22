@@ -1,5 +1,6 @@
 "use client";
 
+import BookingCalendar from "./BookingCalendar";
 import { useState } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import { ScaleHeading } from "@/components/ui/ScaleHeading";
@@ -95,92 +96,8 @@ export default function DiscoveryCallPage() {
                   No pressure, just clarity - and a better view of your profit path.
                 </p>
 
-                <form onSubmit={handleSubmit} className="mt-10 max-w-xl mx-auto space-y-6 text-left">
-                  <div>
-                    <label className="block text-sm font-medium text-zinc-400 mb-1">Name</label>
-                    <input
-                      name="name"
-                      type="text"
-                      required
-                      value={form.name}
-                      onChange={handleChange}
-                      className="w-full bg-zinc-800 text-white px-4 py-3 rounded-md border border-zinc-700 focus:outline-none"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-zinc-400 mb-1">Email</label>
-                    <input
-                      name="email"
-                      type="email"
-                      required
-                      value={form.email}
-                      onChange={handleChange}
-                      className="w-full bg-zinc-800 text-white px-4 py-3 rounded-md border border-zinc-700 focus:outline-none"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-zinc-400 mb-1">Brand / Website</label>
-                    <input
-                      name="brand"
-                      type="text"
-                      required
-                      value={form.brand}
-                      onChange={handleChange}
-                      className="w-full bg-zinc-800 text-white px-4 py-3 rounded-md border border-zinc-700 focus:outline-none"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-zinc-400 mb-1">Package of Interest</label>
-                    <select
-                      name="package"
-                      required
-                      value={form.package}
-                      onChange={handleChange}
-                      className="w-full bg-zinc-800 text-white px-4 py-3 rounded-md border border-zinc-700 focus:outline-none"
-                    >
-                      <option value="">Select a package</option>
-                      {packageOptions.map((option) => (
-                        <option key={option} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-zinc-400 mb-1">Approx. Annual Turnover</label>
-                    <select
-                      name="turnover"
-                      required
-                      value={form.turnover}
-                      onChange={handleChange}
-                      className="w-full bg-zinc-800 text-white px-4 py-3 rounded-md border border-zinc-700 focus:outline-none"
-                    >
-                      <option value="">Select your range</option>
-                      {turnoverRanges.map((range) => (
-                        <option key={range} value={range}>
-                          {range}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-zinc-400 mb-1">Optional Message</label>
-                    <textarea
-                      name="message"
-                      rows={4}
-                      value={form.message}
-                      onChange={handleChange}
-                      className="w-full bg-zinc-800 text-white px-4 py-3 rounded-md border border-zinc-700 focus:outline-none"
-                    ></textarea>
-                  </div>
-                  <button
-                    type="submit"
-                    disabled={formState === "loading"}
-                    className="w-full bg-white text-black font-semibold py-3 rounded-md hover:bg-zinc-200 transition disabled:opacity-50"
-                  >
-                    {formState === "loading" ? "Booking..." : "Submit Request"}
-                  </button>
-                </form>
+                <BookingCalendar />
+
               </motion.div>
             )}
           </AnimatePresence>
