@@ -1,5 +1,23 @@
+// src/app/api/book-call/[...nextauth]/route.ts
+import type { Session } from "next-auth";
+import type { JWT } from "next-auth/jwt";
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
+import type { DefaultSession } from 'next-auth';
+
+declare module 'next-auth' {
+  interface Session extends DefaultSession {
+    accessToken?: string;
+    refreshToken?: string;
+  }
+}
+
+declare module 'next-auth/jwt' {
+  interface JWT {
+    accessToken?: string;
+    refreshToken?: string;
+  }
+}
 
 const handler = NextAuth({
   providers: [
@@ -16,11 +34,9 @@ const handler = NextAuth({
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
-
   pages: {
     signIn: '/api/auth/signin',
   },
-
   callbacks: {
     async jwt({ token, account }) {
       if (account) {
@@ -30,14 +46,11 @@ const handler = NextAuth({
       return token;
     },
     async session({ session, token }) {
-      return {
-        ...session,
-        accessToken: token.accessToken,
-        refreshToken: token.refreshToken,
-      };
+      session.accessToken = token.accessToken;
+      session.refreshToken = token.refreshToken;
+      return session;
     },
   },
 });
 
-export const GET = handler;
-export const POST = handler;
+export { handler as GET, handler as POST };
