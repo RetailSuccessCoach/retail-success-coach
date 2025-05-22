@@ -1,7 +1,5 @@
 'use client';
 
-import BookingCalendar from "./BookingCalendar";
-
 import { useState } from 'react';
 
 export default function BookingCalendar() {
@@ -18,16 +16,21 @@ export default function BookingCalendar() {
     e.preventDefault();
     setLoading(true);
 
-    const res = await fetch('/api/book-call', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
-    });
+    try {
+      const res = await fetch('/api/book-call', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
 
-    if (res.ok) {
-      setConfirmed(true);
-    } else {
-      alert('Something went wrong. Please try again.');
+      if (res.ok) {
+        setConfirmed(true);
+      } else {
+        alert('Something went wrong. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error booking call:', error);
+      alert('There was a problem booking your call. Please try again.');
     }
 
     setLoading(false);
@@ -43,6 +46,7 @@ export default function BookingCalendar() {
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="text"
+            name="name"
             placeholder="Your name"
             className="w-full border p-2 rounded"
             value={formData.name}
@@ -51,6 +55,7 @@ export default function BookingCalendar() {
           />
           <input
             type="email"
+            name="email"
             placeholder="Your email"
             className="w-full border p-2 rounded"
             value={formData.email}
@@ -59,6 +64,7 @@ export default function BookingCalendar() {
           />
           <input
             type="text"
+            name="brand"
             placeholder="Your brand"
             className="w-full border p-2 rounded"
             value={formData.brand}
@@ -66,6 +72,7 @@ export default function BookingCalendar() {
             required
           />
           <textarea
+            name="message"
             placeholder="Your message (optional)"
             className="w-full border p-2 rounded"
             value={formData.message}
