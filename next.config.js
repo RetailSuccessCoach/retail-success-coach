@@ -39,20 +39,13 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-};
-
-module.exports = nextConfig;
-module.exports = {\n  async redirects() {
+  async redirects() {
     return [
       {
         source: '/second-opinion-channel-audit',
         destination: '/second-opinion-audit',
         permanent: true,
       },
-    ];
-  },
-  async redirects() {
-    return [
       {
         source: '/digital-channel-performance-audit',
         destination: '/second-opinion-audit',
@@ -61,3 +54,5 @@ module.exports = {\n  async redirects() {
     ];
   },
 };
+
+module.exports = nextConfig;
