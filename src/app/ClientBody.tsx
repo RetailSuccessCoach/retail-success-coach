@@ -1,21 +1,23 @@
 "use client";
 
 import { useEffect } from "react";
+import { SessionProvider } from "next-auth/react";
 
 export default function ClientBody({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  // Remove any extension-added classes during hydration
+  // Ensure consistent body class on client
   useEffect(() => {
-    // This runs only on the client after hydration
     document.body.className = "antialiased";
   }, []);
 
   return (
-    <body className="antialiased" suppressHydrationWarning>
-      {children}
-    </body>
+    <SessionProvider>
+      <body className="antialiased" suppressHydrationWarning>
+        {children}
+      </body>
+    </SessionProvider>
   );
 }
