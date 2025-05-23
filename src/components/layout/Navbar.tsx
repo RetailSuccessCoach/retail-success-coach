@@ -37,7 +37,6 @@ export default function Navbar() {
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       >
         <div className="container mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
-          {/* Logo */}
           <Link href="/" className="flex items-center">
             <Image
               src="/Retail-Success-Logo.png"
@@ -48,7 +47,6 @@ export default function Navbar() {
             />
           </Link>
 
-          {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-8">
             {navDropdowns.map((dropdown) => (
               <div key={dropdown.title} className="relative">
@@ -75,20 +73,14 @@ export default function Navbar() {
                     >
                       <div className="flex flex-wrap gap-x-12 gap-y-10 px-8 py-6 w-full">
                         {dropdown.sections.map((section) => (
-                          <div
-                            key={section.title}
-                            className="w-[calc(50%-1.5rem)] border-b border-zinc-200 pb-4"
-                          >
+                          <div key={section.title} className="w-[calc(50%-1.5rem)] border-b border-zinc-200 pb-4">
                             <p className="text-xs font-semibold text-black uppercase tracking-wide mb-2">
                               {section.title}
                             </p>
                             <ul className="space-y-2">
                               {section.items.map((item) => (
                                 <li key={item.title}>
-                                  <Link
-                                    href={item.href}
-                                    className="block px-3 py-2 rounded-md hover:bg-zinc-100 transition-colors"
-                                  >
+                                  <Link href={item.href} className="block px-3 py-2 rounded-md hover:bg-zinc-100 transition-colors">
                                     <div className="font-medium text-black">{item.title}</div>
                                     {item.description && (
                                       <p className="text-xs text-zinc-600">{item.description}</p>
@@ -112,17 +104,11 @@ export default function Navbar() {
             <Link href="/blog" className="text-zinc-700 hover:text-black transition-colors">
               Blog
             </Link>
-
-{/**/}
-              Case Studies
-            </Link>
-
-{/**/}
-              Insights
-            </Link>
+            {/* Commented links for now */}
+            {/* <Link href="/case-studies" className="text-zinc-700 hover:text-black transition-colors">Case Studies</Link> */}
+            {/* <Link href="/insights" className="text-zinc-700 hover:text-black transition-colors">Insights</Link> */}
           </div>
 
-          {/* CTA */}
           <div className="hidden lg:flex items-center space-x-4">
             <ScaleButton
               href="/profit-performance-call"
@@ -134,7 +120,6 @@ export default function Navbar() {
             </ScaleButton>
           </div>
 
-          {/* Mobile menu button */}
           <div className="lg:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -147,7 +132,6 @@ export default function Navbar() {
         </div>
       </motion.nav>
 
-      {/* Mobile Navigation */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
@@ -205,14 +189,8 @@ export default function Navbar() {
                 <Link href="/blog" className="block text-lg font-bold text-zinc-900 hover:text-zinc-600">
                   Blog
                 </Link>
-
-{/**/}
-                  Case Studies
-                </Link>
-
-{/**/}
-                  Insights
-                </Link>
+                {/* <Link href="/case-studies" className="block text-lg font-bold text-zinc-900 hover:text-zinc-600">Case Studies</Link> */}
+                {/* <Link href="/insights" className="block text-lg font-bold text-zinc-900 hover:text-zinc-600">Insights</Link> */}
               </div>
 
               <div className="mt-10">

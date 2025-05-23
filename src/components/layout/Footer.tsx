@@ -55,7 +55,7 @@ export default function Footer() {
             <h4 className="text-sm font-semibold text-zinc-400 uppercase">Quick Profit Checks</h4>
             <ul className="space-y-2">
               <li><Link href="/ecommerce-profit-audit" className="text-zinc-400 hover:text-white">Profit Pulse Check</Link></li>
-              <li><Link href="/second-opinion-channel-audit" className="text-zinc-400 hover:text-white">Second-Opinion Audit</Link></li>
+              <li><Link href="/second-opinion-audit" className="text-zinc-400 hover:text-white">Second-Opinion Audit</Link></li>
             </ul>
           </div>
 
@@ -88,8 +88,7 @@ export default function Footer() {
             <h4 className="text-sm font-semibold text-zinc-400 uppercase">Company</h4>
             <ul className="space-y-2">
               <li><Link href="/about" className="text-zinc-400 hover:text-white">About</Link></li>
-              <li>
-{/**/}Contact</Link></li>
+              <li className="hidden">Contact (commented)</li>
             </ul>
           </div>
 
@@ -97,10 +96,8 @@ export default function Footer() {
             <h4 className="text-sm font-semibold text-zinc-400 uppercase">Resources</h4>
             <ul className="space-y-2">
               <li><Link href="/blog" className="text-zinc-400 hover:text-white">Blog</Link></li>
-              <li>
-{/**/}Case Studies</Link></li>
-              <li>
-{/**/}Insights</Link></li>
+              <li className="hidden">Case Studies (commented)</li>
+              <li className="hidden">Insights (commented)</li>
             </ul>
           </div>
 
