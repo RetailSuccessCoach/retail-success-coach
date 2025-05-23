@@ -37,7 +37,7 @@ const handler = NextAuth({
   ],
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: '/api/auth/signin',
+    signIn: '/signin', // ✅ points to the actual frontend page
   },
     callbacks: {
       async jwt({ token, account }) {

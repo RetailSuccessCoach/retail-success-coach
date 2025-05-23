@@ -6,8 +6,6 @@ export async function POST(req: NextRequest) {
     const authHeader = req.headers.get("authorization");
     const accessToken = authHeader?.replace("Bearer ", "").trim();
 
-    console.log("🔐 Incoming token:", accessToken?.slice(0, 10) + "...");
-
     if (!accessToken) {
       console.warn("❌ No access token provided in headers");
       return NextResponse.json({ error: "Missing access token" }, { status: 401 });
@@ -21,18 +19,19 @@ export async function POST(req: NextRequest) {
       message = "None",
       package: selectedPackage,
       turnover,
+      date,
+      time,
+      duration = 30
     } = body;
 
-    console.log("📨 Incoming request:", { name, email, brand, selectedPackage, turnover });
-
-    if (!name || !email || !selectedPackage || !turnover) {
-      console.warn("❌ Missing required fields");
+    if (!name || !email || !selectedPackage || !turnover || !date || !time) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
-    const now = new Date();
-    const startTime = new Date(now.getTime() + 60 * 60 * 1000); // 1 hour from now
-    const endTime = new Date(startTime.getTime() + 30 * 60 * 1000); // 30 min duration
+    const [hour, minute] = time.split(":").map(Number);
+    const startTime = new Date(date);
+    startTime.setHours(hour, minute, 0, 0);
+    const endTime = new Date(startTime.getTime() + duration * 60000);
 
     const auth = new google.auth.OAuth2();
     auth.setCredentials({ access_token: accessToken });
@@ -47,29 +46,13 @@ Email: ${email}
 Message: ${message}
 `.trim();
 
-    console.log("📅 Creating calendar event...");
-
-    console.log("📤 Sending event request with payload:", JSON.stringify({
-  summary: `Discovery Call with ${name}`,
-  description,
-  start: startTime.toISOString(),
-  end: endTime.toISOString(),
-  email,
-}));
-
-const event = await calendar.events.insert({
+    const event = await calendar.events.insert({
       calendarId: "primary",
       conferenceDataVersion: 1,
       sendUpdates: "all",
       requestBody: {
         summary: `Discovery Call with ${name}`,
-        description: `
-      Package: ${selectedPackage}
-      Turnover: ${turnover}
-      Brand: ${brand || "N/A"}
-      Email: ${email}
-      Message: ${message || "None"}
-      `.trim(),
+        description,
         start: {
           dateTime: startTime.toISOString(),
           timeZone: "Europe/London",
@@ -88,9 +71,7 @@ const event = await calendar.events.insert({
           },
         },
       },
-          });
-
-    console.log("✅ Event created:", event.data.id, event.data?.hangoutLink);
+    });
 
     return NextResponse.json({
       success: true,
@@ -105,5 +86,4 @@ const event = await calendar.events.insert({
     }
     return NextResponse.json({ error: "Could not create event" }, { status: 500 });
   }
-
 }
