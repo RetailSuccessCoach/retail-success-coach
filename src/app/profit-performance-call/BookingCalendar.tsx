@@ -21,7 +21,19 @@ export default function BookingCalendar() {
     });
   const [availableTimes, setAvailableTimes] = useState<string[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>();
-  const [confirmation, setConfirmation] = useState<any>(null);
+  type ConfirmationData = {
+  name: string;
+  date: string;
+  time: string;
+  meetLink: string;
+  calendarLinks: {
+    google: string;
+    outlook: string;
+  };
+};
+
+const [confirmation, setConfirmation] = useState<ConfirmationData | null>(null);
+
   const [loading, setLoading] = useState(false);
   const { data: session } = useSession();
   const accessToken = session?.accessToken;
