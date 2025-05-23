@@ -42,7 +42,15 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
-module.exports = {
+module.exports = {\n  async redirects() {
+    return [
+      {
+        source: '/second-opinion-channel-audit',
+        destination: '/second-opinion-audit',
+        permanent: true,
+      },
+    ];
+  },
   async redirects() {
     return [
       {

@@ -88,7 +88,8 @@ export default function Footer() {
             <h4 className="text-sm font-semibold text-zinc-400 uppercase">Company</h4>
             <ul className="space-y-2">
               <li><Link href="/about" className="text-zinc-400 hover:text-white">About</Link></li>
-              <li><Link href="/contact" className="text-zinc-400 hover:text-white">Contact</Link></li>
+              <li>
+{/**/}Contact</Link></li>
             </ul>
           </div>
 
@@ -96,8 +97,10 @@ export default function Footer() {
             <h4 className="text-sm font-semibold text-zinc-400 uppercase">Resources</h4>
             <ul className="space-y-2">
               <li><Link href="/blog" className="text-zinc-400 hover:text-white">Blog</Link></li>
-              <li><Link href="/case-studies" className="text-zinc-400 hover:text-white">Case Studies</Link></li>
-              <li><Link href="/insights" className="text-zinc-400 hover:text-white">Insights</Link></li>
+              <li>
+{/**/}Case Studies</Link></li>
+              <li>
+{/**/}Insights</Link></li>
             </ul>
           </div>
 

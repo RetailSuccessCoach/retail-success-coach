@@ -112,10 +112,12 @@ export default function Navbar() {
             <Link href="/blog" className="text-zinc-700 hover:text-black transition-colors">
               Blog
             </Link>
-            <Link href="/case-studies" className="text-zinc-700 hover:text-black transition-colors">
+
+{/**/}
               Case Studies
             </Link>
-            <Link href="/insights" className="text-zinc-700 hover:text-black transition-colors">
+
+{/**/}
               Insights
             </Link>
           </div>
@@ -203,10 +205,12 @@ export default function Navbar() {
                 <Link href="/blog" className="block text-lg font-bold text-zinc-900 hover:text-zinc-600">
                   Blog
                 </Link>
-                <Link href="/case-studies" className="block text-lg font-bold text-zinc-900 hover:text-zinc-600">
+
+{/**/}
                   Case Studies
                 </Link>
-                <Link href="/insights" className="block text-lg font-bold text-zinc-900 hover:text-zinc-600">
+
+{/**/}
                   Insights
                 </Link>
               </div>
