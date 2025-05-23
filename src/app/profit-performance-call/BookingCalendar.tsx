@@ -167,24 +167,40 @@ export default function BookingCalendar() {
           />
         </div>
 
-        {availableTimes.length > 0 && (
-          <div>
-            <p className="font-semibold mb-2">Available Times:</p>
-            <div className="flex overflow-x-auto gap-2 pb-2">
-              {availableTimes.map((time) => (
-                <button
-                  key={time}
-                  onClick={() => setFormData({ ...formData, time })}
-                  className={`min-w-[80px] px-4 py-2 border rounded text-sm ${
-                    formData.time === time ? 'bg-black text-white' : 'bg-zinc-100'
-                  }`}
-                >
-                  {time}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
+    {availableTimes.length > 0 ? (
+    <div className="mt-6">
+        <p className="font-semibold mb-2">Available Times:</p>
+
+        {/* DEBUG LOGGING */}
+        <pre className="text-xs text-gray-500 mb-2">
+        Selected Date: {formData.date}{"\n"}
+        Access Token: {accessToken ? '✅' : '❌'}{"\n"}
+        Times: {JSON.stringify(availableTimes)}
+        </pre>
+
+        {/* TIME BUTTONS - now wraps on mobile */}
+        <div className="flex flex-wrap gap-2">
+        {availableTimes.map((time) => (
+            <button
+            key={time}
+            onClick={() => setFormData({ ...formData, time })}
+            className={`px-4 py-2 border rounded text-sm ${
+                formData.time === time ? 'bg-black text-white' : 'bg-zinc-100'
+            }`}
+            >
+            {time}
+            </button>
+        ))}
+        </div>
+    </div>
+    ) : (
+    selectedDate && (
+        <p className="text-sm text-gray-500 mt-4">
+        No times available for the selected date.
+        </p>
+    )
+    )}
+
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="flex flex-col sm:flex-row sm:gap-4">
