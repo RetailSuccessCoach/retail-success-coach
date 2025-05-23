@@ -1,4 +1,4 @@
-﻿import { google } from "googleapis";
+import { google } from "googleapis";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -97,8 +97,13 @@ const event = await calendar.events.insert({
       eventId: event.data.id,
       meetLink: event.data?.hangoutLink,
     });
-  } catch (error: any) {
-    console.error("❌ Booking error:", error?.response?.data || error.message || error);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("❌ Booking error:", error.message);
+    } else {
+      console.error("❌ Unknown booking error:", error);
+    }
     return NextResponse.json({ error: "Could not create event" }, { status: 500 });
   }
+
 }

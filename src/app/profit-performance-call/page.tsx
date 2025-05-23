@@ -1,4 +1,4 @@
-"use client";
+Ôªø"use client";
 
 import { useSession } from "next-auth/react";
 import { useState } from "react";
@@ -9,7 +9,7 @@ import { Container } from "@/components/ui/Container";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle } from "lucide-react";
 
-export default function DiscoveryCallPage() {
+export default function ProfitPerformanceCallPage() {
   const { data: session } = useSession();
 
   const [form, setForm] = useState({
@@ -18,7 +18,7 @@ export default function DiscoveryCallPage() {
     brand: "",
     message: "",
     package: "Profit Pulse Check",
-    turnover: "£100kñ500k",
+    turnover: "¬£100k‚Äì500k",
   });
 
   const [formState, setFormState] = useState<"idle" | "success" | "loading">("idle");
@@ -46,7 +46,7 @@ export default function DiscoveryCallPage() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: Bearer ,
+          Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify(form),
       });
@@ -59,7 +59,7 @@ export default function DiscoveryCallPage() {
         setFormState("idle");
       }
     } catch (err) {
-      console.error("? Error submitting form:", err);
+      console.error("‚ùå Error submitting form:", err);
       setFormState("idle");
     }
   };
@@ -140,8 +140,7 @@ function SuccessView() {
         <CheckCircle className="h-10 w-10 text-green-500" />
       </div>
       <ScaleHeading size="2xl">Thank You!</ScaleHeading>
-      <p className="text-zinc-300 mb-8">Your call is booked. Iíll be in touch soon.</p>
+      <p className="text-zinc-300 mb-8">Your call is booked. I‚Äôll be in touch soon.</p>
     </motion.div>
   );
 }
-
