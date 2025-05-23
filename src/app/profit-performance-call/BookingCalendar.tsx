@@ -1,4 +1,3 @@
-// BookingCalendar.tsx – Full Component
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -7,21 +6,7 @@ import { format } from 'date-fns';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 
-export default function BookingCalendar() {
-    const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    brand: '',
-    message: '',
-    date: '',
-    time: '',
-    duration: 30,
-    package: 'Profit Pulse Check',      // ✅ add this
-    turnover: '£100k–500k'              // ✅ and this
-    });
-  const [availableTimes, setAvailableTimes] = useState<string[]>([]);
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>();
-  type ConfirmationData = {
+type ConfirmationData = {
   name: string;
   date: string;
   time: string;
@@ -32,11 +17,30 @@ export default function BookingCalendar() {
   };
 };
 
-const [confirmation, setConfirmation] = useState<ConfirmationData | null>(null);
+export default function BookingCalendar() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    brand: '',
+    message: '',
+    date: '',
+    time: '',
+    duration: 30,
+    package: 'Profit Pulse Check',
+    turnover: '£100k–500k'
+  });
 
+  const [availableTimes, setAvailableTimes] = useState<string[]>([]);
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>();
+  const [confirmation, setConfirmation] = useState<ConfirmationData | null>(null);
   const [loading, setLoading] = useState(false);
   const { data: session } = useSession();
   const accessToken = session?.accessToken;
+
+  useEffect(() => {
+    console.log("🧪 Session (live check):", session);
+    console.log("🔐 Access Token (live check):", session?.accessToken);
+  }, [session]);
 
   useEffect(() => {
     if (!selectedDate || !formData.duration || !accessToken) return;
