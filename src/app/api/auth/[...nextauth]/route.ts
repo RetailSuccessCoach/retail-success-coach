@@ -1,9 +1,11 @@
-// src/app/api/book-call/[...nextauth]/route.ts
+// src/app/api/auth/[...nextauth]/route.ts
 import type { Session } from "next-auth";
 import type { JWT } from "next-auth/jwt";
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import type { DefaultSession } from 'next-auth';
+
+console.log("GOOGLE_CLIENT_ID:", process.env.GOOGLE_CLIENT_ID);
 
 declare module 'next-auth' {
   interface Session extends DefaultSession {

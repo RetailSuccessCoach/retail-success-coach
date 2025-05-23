@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -22,18 +18,12 @@
         "name": "next"
       }
     ],
+    "baseUrl": "src",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["*"],
+      "@secrets/*": ["../secrets/*"]
     },
-    // New addition for custom type support
-    "typeRoots": [
-      "./node_modules/@types",
-      "./types"
-    ],
-    // Optional but recommended for Next.js projects
-    "baseUrl": "."
+    "typeRoots": ["./node_modules/@types", "./types"]
   },
   "include": [
     "**/*.ts",
@@ -44,7 +34,5 @@
     "types",
     "out/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

@@ -199,7 +199,7 @@ export default function AboutPage() {
           </h2>
           <div className="flex flex-wrap justify-center gap-4">
             <Link
-              href="/demo"
+              href="/profit-performance-call"
               className="px-6 py-3 bg-zinc-800 hover:bg-zinc-700 text-white rounded-md transition-colors"
             >
               Book a Demo
@@ -216,3 +216,4 @@ export default function AboutPage() {
     </MainLayout>
   );
 }
+

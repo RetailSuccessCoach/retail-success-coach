@@ -13,7 +13,7 @@ export default function HowItWorksSection() {
 
         <Link
           href="/profit-strategy-process"
-          className="inline-block px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg transition-colors"
+          className="inline-block px-6 py-3 border border-zinc-600 text-white font-medium rounded-full hover:bg-zinc-800 transition-colors"
         >
           Learn More →
         </Link>

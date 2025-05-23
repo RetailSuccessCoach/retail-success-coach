@@ -18,8 +18,9 @@
     "next": "^15.2.0",
     "next-auth": "^4.24.11",
     "react": "^18.3.1",
+    "react-datepicker": "^8.3.0",
     "react-dom": "^18.3.1",
-    "tailwind-merge": "^3.0.1",
+    "tailwind-merge": "^3.3.0",
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
@@ -31,6 +32,7 @@
     "@types/node": "^20.17.50",
     "@types/prop-types": "^15.7.14",
     "@types/react": "^18.3.22",
+    "@types/react-datepicker": "^6.2.0",
     "@types/react-dom": "^18.3.7",
     "eslint": "^9",
     "eslint-config-next": "15.1.7",

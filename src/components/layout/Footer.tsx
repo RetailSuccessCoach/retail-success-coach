@@ -18,9 +18,11 @@ export default function Footer() {
         <div className="pb-12">
           <div className="flex flex-col lg:flex-row justify-between gap-8 items-start lg:items-center">
             <div className="flex flex-col gap-4 max-w-xl">
-              <h3 className="text-4xl font-light">
+              <h3 className="text-4xl font-light text-white">
                 Scale Faster with{" "}
-                <span className="scale-gradient-text font-normal">Sharper Insights.</span>
+                <span className="bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text text-transparent font-normal">
+                  Sharper Insights.
+                </span>
               </h3>
               <Link
                 href="/profit-performance-call"

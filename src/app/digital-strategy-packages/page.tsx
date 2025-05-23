@@ -182,14 +182,14 @@ const DigitalStrategyPackagesPage = () => {
       <MainLayout>
         <section className="py-16 px-4 max-w-6xl mx-auto">
           <h1 className="text-4xl font-bold mb-4">Profit Strategy Packages</h1>
-          <p className="text-lg text-zinc-300 mb-10">
-            Whether you're stuck, scaling, or starting fresh - every plan here ties your growth goals to your bottom line.
+          <p className="text-lg text-zinc-600 mb-10">
+            Whether you're stuck, scaling, or starting fresh – every plan here ties your growth goals to your bottom line.
           </p>
 
               {packages.map((section) => (
       <div key={section.title} className="mt-12">
         <h2 className="text-2xl font-semibold text-white mb-2">{section.title}</h2>
-        <p className="text-zinc-400 mb-4">{section.description}</p>
+        <p className="text-zinc-700 mb-4">{section.description}</p>
 
         {/* Desktop Table */}
         <div className="hidden md:block overflow-x-auto">
@@ -203,19 +203,19 @@ const DigitalStrategyPackagesPage = () => {
                 <th className="p-4 w-1/6">Availability</th>
               </tr>
             </thead>
-            <tbody className="text-zinc-300 divide-y divide-zinc-700">
+            <tbody className="text-sm divide-y divide-zinc-700">
               {section.packages.map((pkg) => (
                 <React.Fragment key={pkg.name}>
                   <tr>
-                    <td className="p-4 font-medium text-white">
-                      {pkg.link ? (
-                        <a href={pkg.link} className="underline hover:text-zinc-300">
-                          {pkg.name}
-                        </a>
-                      ) : (
-                        pkg.name
-                      )}
-                    </td>
+            <td className="p-4 text-white font-semibold">
+              {pkg.link ? (
+                <a href={pkg.link} className="text-zinc-600 underline hover:text-zinc-900">
+                  {pkg.name}
+                </a>
+              ) : (
+                pkg.name
+              )}
+            </td>
                     <td className="p-4">{pkg.price}</td>
                     <td className="p-4">{pkg.bestFor}</td>
                     <td className="p-4">
@@ -278,12 +278,12 @@ const DigitalStrategyPackagesPage = () => {
             <h3 className="text-xl font-semibold text-white mb-4">
               Every service begins with a clarity call.
             </h3>
-            <p className="text-zinc-400 mb-6">
+            <p className="text-zinc-600 mb-6">
               If you're serious about tying growth to real profit outcomes, let's talk.
             </p>
             <a
               href="/profit-performance-call"
-              className="inline-block px-6 py-3 bg-white text-black font-semibold rounded-md hover:bg-zinc-200 transition"
+              className="inline-block px-6 py-3 text-black font-semibold border border-black rounded-full transition-transform duration-200 hover:bg-black hover:text-white hover:scale-105"
             >
               Book a Discovery Call
             </a>
@@ -295,3 +295,4 @@ const DigitalStrategyPackagesPage = () => {
 };
 
 export default DigitalStrategyPackagesPage;
+

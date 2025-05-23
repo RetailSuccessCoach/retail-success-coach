@@ -1,61 +1,70 @@
-import { google } from "googleapis";
-import { OAuth2Client } from "google-auth-library"; // ✅ Correct position for the import
+﻿import { google } from "googleapis";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(request: Request) {
-  const body = await request.json();
-  const { name, email, brand, message } = body;
-
-  if (!name || !email || !brand) {
-    return new Response(JSON.stringify({ error: "Missing required fields" }), {
-      status: 400,
-    });
-  }
-
+export async function POST(req: NextRequest) {
   try {
-    const auth = new google.auth.GoogleAuth({
-      credentials: {
-        client_email: process.env.GCAL_CLIENT_EMAIL!,
-        private_key: process.env.GCAL_PRIVATE_KEY!.replace(/\\n/g, "\n"),
-      },
-      scopes: ["https://www.googleapis.com/auth/calendar"],
-    });
+    const authHeader = req.headers.get("authorization");
+    const accessToken = authHeader?.replace("Bearer ", "").trim();
 
-    const authClient = (await auth.getClient()) as OAuth2Client; // ✅ Cast for TypeScript compatibility
-    const calendar = google.calendar({ version: "v3", auth: authClient });
+    console.log("🔐 Incoming token:", accessToken);
 
-    const start = new Date(Date.now() + 48 * 60 * 60 * 1000); // 2 days from now
-    const end = new Date(start.getTime() + 30 * 60 * 1000);   // 30 minutes later
+    if (!accessToken) {
+      return NextResponse.json({ error: "Missing access token" }, { status: 401 });
+    }
 
-    const event = {
-      summary: `Discovery Call – ${name}`,
-      description: `Brand: ${brand}\nEmail: ${email}\n\nMessage: ${message}`,
-      start: {
-        dateTime: start.toISOString(),
-        timeZone: "Europe/London",
-      },
-      end: {
-        dateTime: end.toISOString(),
-        timeZone: "Europe/London",
-      },
-      attendees: [
-        {
-          email: email,
-          responseStatus: "needsAction", // ✅ Sends invite to user's inbox
+    const body = await req.json();
+    const { name, email, brand, message, package: selectedPackage, turnover } = body;
+
+    if (!name || !email || !selectedPackage || !turnover) {
+      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+    }
+
+    const now = new Date();
+    const startTime = new Date(now.getTime() + 60 * 60 * 1000);
+    const endTime = new Date(startTime.getTime() + 30 * 60 * 1000);
+
+    const auth = new google.auth.OAuth2();
+    auth.setCredentials({ access_token: accessToken });
+
+    const calendar = google.calendar({ version: "v3", auth });
+
+    const event = await calendar.events.insert({
+      calendarId: "primary",
+      conferenceDataVersion: 1,
+      sendUpdates: "all",
+      requestBody: {
+        summary: \Discovery Call with \ (\)\,
+        description: \
+Package: \
+Turnover: \
+Message: \
+Email: \
+        \.trim(),
+        start: {
+          dateTime: startTime.toISOString(),
+          timeZone: "Europe/London",
         },
-      ],
-    };
-
-    await calendar.events.insert({
-      calendarId: process.env.GCAL_CALENDAR_ID!,
-      requestBody: event,
-      sendUpdates: "all", // ✅ Triggers Google Calendar invite
+        end: {
+          dateTime: endTime.toISOString(),
+          timeZone: "Europe/London",
+        },
+        attendees: [{ email }],
+        conferenceData: {
+          createRequest: {
+            requestId: \meet-\\,
+            conferenceSolutionKey: { type: "hangoutsMeet" },
+          },
+        },
+      },
     });
 
-    return new Response(JSON.stringify({ success: true }), { status: 200 });
-  } catch (error) {
-    console.error("Calendar API error:", error);
-    return new Response(JSON.stringify({ error: "Failed to book event" }), {
-      status: 500,
+    return NextResponse.json({
+      success: true,
+      eventId: event.data.id,
+      meetLink: event.data?.hangoutLink,
     });
+  } catch (error: any) {
+    console.error("❌ Booking error:", error?.response?.data || error.message || error);
+    return NextResponse.json({ error: "Could not create event" }, { status: 500 });
   }
 }
