@@ -1,3 +1,4 @@
+// app/book/page.tsx
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -10,6 +11,7 @@ export default function BookingPage() {
   const [brand, setBrand] = useState('');
   const [contactInfo, setContactInfo] = useState('');
   const [selectedDateTime, setSelectedDateTime] = useState('');
+  const [duration, setDuration] = useState('30'); // New state for duration, default to 30 minutes
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [minDateTime, setMinDateTime] = useState('');
@@ -24,7 +26,8 @@ export default function BookingPage() {
     setLoading(true);
     setError(null);
 
-    if (!name.trim() || !brand.trim() || !contactInfo.trim() || !selectedDateTime) {
+    // Client-side validation
+    if (!name.trim() || !brand.trim() || !contactInfo.trim() || !selectedDateTime || !duration) {
       setError('Please fill in all required fields.');
       setLoading(false);
       return;
@@ -47,7 +50,13 @@ export default function BookingPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, brand, contactInfo, selectedDateTime }),
+        body: JSON.stringify({
+          name,
+          brand,
+          contactInfo,
+          selectedDateTime,
+          duration: parseInt(duration, 10), // Send duration as a number
+        }),
       });
 
       if (!response.ok) {
@@ -55,7 +64,8 @@ export default function BookingPage() {
         throw new Error(errorData.message || 'Failed to book call. Please try again.');
       }
 
-      router.push(`/thank-you?date=${encodeURIComponent(selectedDateTime)}&name=${encodeURIComponent(name)}`);
+      // Pass duration to the thank-you page
+      router.push(`/thank-you?date=${encodeURIComponent(selectedDateTime)}&name=${encodeURIComponent(name)}&duration=${encodeURIComponent(duration)}`);
 
     } catch (err: any) {
       setError(err.message || 'An unexpected error occurred.');
@@ -66,25 +76,43 @@ export default function BookingPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
-      <div className="w-full max-w-md bg-white rounded-xl border border-gray-200 shadow-xl p-8 sm:p-10">
-        <h1 className="text-4xl font-extrabold text-gray-900 mb-8 tracking-tight text-center">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+      <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-6 sm:p-8">
+        <h1 className="text-3xl font-extrabold text-gray-900 mb-6 text-center">
           Book Your Call
         </h1>
 
         {error && (
-          <div
-            className="bg-red-50 border border-red-400 text-red-700 px-5 py-3 rounded-lg mb-6"
-            role="alert"
-          >
-            <strong className="font-semibold">Error!</strong>
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+            <strong className="font-bold">Error!</strong>
             <span className="block sm:inline ml-2">{error}</span>
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Duration Selector */}
           <div>
-            <label htmlFor="selectedDateTime" className="block mb-2 text-sm font-semibold text-gray-700">
+            <label htmlFor="duration" className="block text-sm font-medium text-gray-700 mb-1">
+              Call Duration
+            </label>
+            <select
+              id="duration"
+              value={duration}
+              onChange={(e) => setDuration(e.target.value)}
+              required
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-blue-500 focus:border-blue-500 text-base"
+              suppressHydrationWarning
+            >
+              <option value="15">15 Minutes</option>
+              <option value="30">30 Minutes</option>
+              <option value="45">45 Minutes</option>
+              <option value="60">60 Minutes</option>
+            </select>
+          </div>
+
+          {/* Date & Time Picker */}
+          <div>
+            <label htmlFor="selectedDateTime" className="block text-sm font-medium text-gray-700 mb-1">
               Choose Date & Time
             </label>
             <input
@@ -94,12 +122,14 @@ export default function BookingPage() {
               onChange={(e) => setSelectedDateTime(e.target.value)}
               required
               min={minDateTime}
-              className="mt-1 block w-full border border-gray-300 rounded-lg bg-gray-50 px-4 py-3 text-base placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-blue-500 focus:border-blue-500 text-base"
               suppressHydrationWarning
             />
           </div>
+
+          {/* Name Input */}
           <div>
-            <label htmlFor="name" className="block mb-2 text-sm font-semibold text-gray-700">
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
               Your Name
             </label>
             <input
@@ -109,12 +139,14 @@ export default function BookingPage() {
               onChange={(e) => setName(e.target.value)}
               required
               placeholder="e.g., Jane Doe"
-              className="mt-1 block w-full border border-gray-300 rounded-lg bg-gray-50 px-4 py-3 text-base placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-blue-500 focus:border-blue-500 text-base"
               suppressHydrationWarning
             />
           </div>
+
+          {/* Brand Input */}
           <div>
-            <label htmlFor="brand" className="block mb-2 text-sm font-semibold text-gray-700">
+            <label htmlFor="brand" className="block text-sm font-medium text-gray-700 mb-1">
               Brand/Company
             </label>
             <input
@@ -124,12 +156,14 @@ export default function BookingPage() {
               onChange={(e) => setBrand(e.target.value)}
               required
               placeholder="e.g., Acme Corp"
-              className="mt-1 block w-full border border-gray-300 rounded-lg bg-gray-50 px-4 py-3 text-base placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-blue-500 focus:border-blue-500 text-base"
               suppressHydrationWarning
             />
           </div>
+
+          {/* Contact Email Input */}
           <div>
-            <label htmlFor="contactInfo" className="block mb-2 text-sm font-semibold text-gray-700">
+            <label htmlFor="contactInfo" className="block text-sm font-medium text-gray-700 mb-1">
               Contact Email
             </label>
             <input
@@ -139,14 +173,15 @@ export default function BookingPage() {
               onChange={(e) => setContactInfo(e.target.value)}
               required
               placeholder="e.g., jane.doe@example.com"
-              className="mt-1 block w-full border border-gray-300 rounded-lg bg-gray-50 px-4 py-3 text-base placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-blue-500 focus:border-blue-500 text-base"
               suppressHydrationWarning
             />
           </div>
+
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-4 px-6 bg-blue-600 text-white font-bold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-opacity-50 transition"
+            className="w-full bg-blue-600 text-white font-semibold py-3 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed text-lg"
             suppressHydrationWarning
           >
             {loading ? 'Confirming...' : 'Confirm Booking'}

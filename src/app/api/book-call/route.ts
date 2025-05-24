@@ -10,7 +10,6 @@ async function getAuthenticatedCalendarClient() {
   const CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
   const REFRESH_TOKEN = process.env.GOOGLE_REFRESH_TOKEN;
 
-  // --- ENHANCED DEBUGGING FOR MISSING ENV VARS ---
   let missingVars: string[] = [];
   if (!CLIENT_ID) missingVars.push('GOOGLE_CLIENT_ID');
   if (!CLIENT_SECRET) missingVars.push('GOOGLE_CLIENT_SECRET');
@@ -18,10 +17,9 @@ async function getAuthenticatedCalendarClient() {
 
   if (missingVars.length > 0) {
     const errorMessage = `ERROR: Missing Google API environment variables: ${missingVars.join(', ')}. Check .env.local and Vercel settings.`;
-    console.error(errorMessage); // Log the specific missing variables
-    throw new Error(errorMessage); // Throw the detailed error
+    console.error(errorMessage);
+    throw new Error(errorMessage);
   }
-  // --------------------------------------------------
 
   const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET);
 
@@ -34,7 +32,6 @@ async function getAuthenticatedCalendarClient() {
     oAuth2Client.setCredentials(credentials);
   } catch (refreshError: any) {
     console.error('Error refreshing Google access token:', refreshError.message);
-    // Google API often sends specific errors for invalid refresh tokens
     if (refreshError.response && refreshError.response.data) {
         console.error('Google Refresh Token Error Details:', refreshError.response.data);
     }
@@ -53,10 +50,11 @@ export async function POST(req: Request) {
   }
 
   try {
-    const { name, brand, contactInfo, selectedDateTime } = await req.json();
+    // Destructure `duration` from the request body
+    const { name, brand, contactInfo, selectedDateTime, duration } = await req.json();
 
     // Basic server-side validation
-    if (!name || !brand || !contactInfo || !selectedDateTime) {
+    if (!name || !brand || !contactInfo || !selectedDateTime || !duration) {
       return NextResponse.json({ message: 'Missing required fields' }, { status: 400 });
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactInfo)) {
@@ -66,36 +64,41 @@ export async function POST(req: Request) {
     if (!parsedDateTime.isValid() || parsedDateTime.isBefore(dayjs())) {
         return NextResponse.json({ message: 'Invalid or past date/time selected.' }, { status: 400 });
     }
+    // Validate duration
+    const parsedDuration = parseInt(duration, 10);
+    if (isNaN(parsedDuration) || ![15, 30, 45, 60].includes(parsedDuration)) {
+        return NextResponse.json({ message: 'Invalid call duration selected.' }, { status: 400 });
+    }
 
     const calendar = await getAuthenticatedCalendarClient();
 
     const startTime = parsedDateTime.toDate();
-    const endTime = parsedDateTime.add(30, 'minute').toDate();
+    // Calculate endTime using the provided duration
+    const endTime = parsedDateTime.add(parsedDuration, 'minute').toDate();
 
     const YOUR_EMAIL_ADDRESS = process.env.YOUR_EMAIL_ADDRESS;
     const YOUR_CALENDAR_ID = process.env.YOUR_CALENDAR_ID || 'primary';
 
-    // --- ENHANCED DEBUGGING FOR OTHER MISSING ENV VARS ---
     let missingCalendarVars: string[] = [];
     if (!YOUR_EMAIL_ADDRESS) missingCalendarVars.push('YOUR_EMAIL_ADDRESS');
-    if (!process.env.YOUR_CALENDAR_ID) missingCalendarVars.push('YOUR_CALENDAR_ID'); // Check if it's explicitly set
+    if (!process.env.YOUR_CALENDAR_ID) missingCalendarVars.push('YOUR_CALENDAR_ID');
 
     if (missingCalendarVars.length > 0) {
         const errorMessage = `ERROR: Missing Calendar configuration environment variables: ${missingCalendarVars.join(', ')}.`;
         console.error(errorMessage);
         throw new Error(errorMessage);
     }
-    // ----------------------------------------------------
 
     const event = {
-      summary: `Call with ${name} (${brand})`,
+      summary: `Call with ${name} (${brand}) - ${parsedDuration} Minutes`, // Include duration in summary
       description: `
         Visitor Name: ${name}
         Brand: ${brand}
         Contact Email: ${contactInfo}
+        Call Duration: ${parsedDuration} minutes
         ---
         Please refer to this booking.
-      `,
+      `, // Include duration in description
       start: {
         dateTime: startTime.toISOString(),
         timeZone: 'Europe/London', // Assume your timezone
@@ -142,19 +145,18 @@ export async function POST(req: Request) {
   } catch (error: any) {
     console.error('Error in POST /api/book-call:', error.message);
     if (error.response && error.response.data) {
-      console.error('Google API Full Error Response:', error.response.data); // More detailed Google error
+      console.error('Google API Full Error Response:', error.response.data);
     }
-    // Return a more specific error message to the frontend if available
     const clientErrorMessage = error.message.includes('Missing Google API environment variables') ||
                              error.message.includes('Failed to refresh Google access token') ||
                              error.message.includes('Missing Calendar configuration environment variables')
-                             ? error.message // Pass the detailed error if it's one of ours
-                             : 'Failed to book call due to a server error.'; // Generic for others
+                             ? error.message
+                             : 'Failed to book call due to a server error.';
 
     return NextResponse.json({
       message: clientErrorMessage,
       error: error.message,
-      details: error.response?.data?.error // Pass Google's error details if available
+      details: error.response?.data?.error
     }, { status: 500 });
   }
 }

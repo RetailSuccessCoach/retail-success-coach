@@ -1,19 +1,19 @@
 // app/thank-you/ThankYouContent.tsx
-'use client'; // This component MUST be a client component
+'use client';
 
 import { useSearchParams } from 'next/navigation';
 import dayjs from 'dayjs';
-import 'dayjs/locale/en-gb'; // Or your preferred locale for formatting
+import 'dayjs/locale/en-gb';
 
 export default function ThankYouContent() {
   const searchParams = useSearchParams();
   const bookedDateTime = searchParams.get('date');
   const visitorName = searchParams.get('name');
+  const duration = searchParams.get('duration'); // Retrieve duration from URL
 
   // Format the date/time for display
   let formattedDate = 'your selected date and time';
   if (bookedDateTime) {
-    // dayjs will handle the YYYY-MM-DDTHH:mm format from datetime-local input
     formattedDate = dayjs(bookedDateTime).locale('en-gb').format('dddd, D MMMM YYYY [at] HH:mm');
   }
 
@@ -37,6 +37,7 @@ export default function ThankYouContent() {
       <p className="text-md text-gray-600 mb-4">Your call is scheduled for:</p>
       <p className="text-2xl font-bold text-gray-900 mb-6">
         {formattedDate}
+        {duration && <span className="block text-lg font-normal text-gray-700 mt-1">({duration} Minutes)</span>}
       </p>
       <p className="text-gray-700 mb-2">
         A calendar invite has been sent to your email address.
@@ -46,7 +47,7 @@ export default function ThankYouContent() {
       </p>
 
       <a
-        href="/" // Link back to your homepage
+        href="/"
         className="inline-block bg-blue-600 text-white font-semibold py-3 px-6 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 ease-in-out"
       >
         Back to Home
