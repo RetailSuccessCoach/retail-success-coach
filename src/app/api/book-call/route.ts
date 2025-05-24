@@ -1,30 +1,27 @@
 import { google } from 'googleapis';
 import { NextResponse } from 'next/server';
-import dayjs from 'dayjs'; // Import dayjs for date parsing and formatting
-
-// --- Configuration: Ensure these environment variables are set ---
-// GOOGLE_CLIENT_ID
-// GOOGLE_CLIENT_SECRET
-// GOOGLE_REFRESH_TOKEN
-// YOUR_CALENDAR_ID (e.g., 'primary' or a specific calendar ID)
-// YOUR_EMAIL_ADDRESS (Your email associated with the calendar)
-// -----------------------------------------------------------------
+import dayjs from 'dayjs';
 
 /**
  * Helper function to get an authenticated Google Calendar client.
- * This function uses your stored refresh token to get a new access token
- * for every API call, ensuring it's always valid.
  */
 async function getAuthenticatedCalendarClient() {
-  // Ensure environment variables are loaded (Next.js automatically does this for API routes)
   const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
   const CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
   const REFRESH_TOKEN = process.env.GOOGLE_REFRESH_TOKEN;
 
-  if (!CLIENT_ID || !CLIENT_SECRET || !REFRESH_TOKEN) {
-    console.error('ERROR: Missing Google API environment variables. Check .env.local and Vercel settings.');
-    throw new Error('Google API credentials not fully configured.');
+  // --- ENHANCED DEBUGGING FOR MISSING ENV VARS ---
+  let missingVars: string[] = [];
+  if (!CLIENT_ID) missingVars.push('GOOGLE_CLIENT_ID');
+  if (!CLIENT_SECRET) missingVars.push('GOOGLE_CLIENT_SECRET');
+  if (!REFRESH_TOKEN) missingVars.push('GOOGLE_REFRESH_TOKEN');
+
+  if (missingVars.length > 0) {
+    const errorMessage = `ERROR: Missing Google API environment variables: ${missingVars.join(', ')}. Check .env.local and Vercel settings.`;
+    console.error(errorMessage); // Log the specific missing variables
+    throw new Error(errorMessage); // Throw the detailed error
   }
+  // --------------------------------------------------
 
   const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET);
 
@@ -33,13 +30,15 @@ async function getAuthenticatedCalendarClient() {
   });
 
   try {
-    // Attempt to refresh the access token. This handles token expiration.
     const { credentials } = await oAuth2Client.refreshAccessToken();
     oAuth2Client.setCredentials(credentials);
   } catch (refreshError: any) {
     console.error('Error refreshing Google access token:', refreshError.message);
-    // You might want to log more details or alert yourself if refresh tokens fail consistently
-    throw new Error('Failed to refresh Google access token. Please check your refresh token.');
+    // Google API often sends specific errors for invalid refresh tokens
+    if (refreshError.response && refreshError.response.data) {
+        console.error('Google Refresh Token Error Details:', refreshError.response.data);
+    }
+    throw new Error('Failed to refresh Google access token. Please check your GOOGLE_REFRESH_TOKEN and its validity.');
   }
 
   return google.calendar({ version: 'v3', auth: oAuth2Client });
@@ -47,7 +46,6 @@ async function getAuthenticatedCalendarClient() {
 
 /**
  * Handles POST requests to book a call.
- * This is your main API endpoint for creating calendar events.
  */
 export async function POST(req: Request) {
   if (req.method !== 'POST') {
@@ -69,20 +67,25 @@ export async function POST(req: Request) {
         return NextResponse.json({ message: 'Invalid or past date/time selected.' }, { status: 400 });
     }
 
-
     const calendar = await getAuthenticatedCalendarClient();
 
-    const startTime = parsedDateTime.toDate(); // Convert dayjs object to Date object
-    const endTime = parsedDateTime.add(30, 'minute').toDate(); // Assuming 30-minute calls
+    const startTime = parsedDateTime.toDate();
+    const endTime = parsedDateTime.add(30, 'minute').toDate();
 
-    // Ensure YOUR_EMAIL_ADDRESS and YOUR_CALENDAR_ID are set in environment variables
     const YOUR_EMAIL_ADDRESS = process.env.YOUR_EMAIL_ADDRESS;
-    const YOUR_CALENDAR_ID = process.env.YOUR_CALENDAR_ID || 'primary'; // Fallback to 'primary'
+    const YOUR_CALENDAR_ID = process.env.YOUR_CALENDAR_ID || 'primary';
 
-    if (!YOUR_EMAIL_ADDRESS) {
-      console.error('YOUR_EMAIL_ADDRESS is not set in environment variables.');
-      return NextResponse.json({ message: 'Server configuration error: Your email address missing.' }, { status: 500 });
+    // --- ENHANCED DEBUGGING FOR OTHER MISSING ENV VARS ---
+    let missingCalendarVars: string[] = [];
+    if (!YOUR_EMAIL_ADDRESS) missingCalendarVars.push('YOUR_EMAIL_ADDRESS');
+    if (!process.env.YOUR_CALENDAR_ID) missingCalendarVars.push('YOUR_CALENDAR_ID'); // Check if it's explicitly set
+
+    if (missingCalendarVars.length > 0) {
+        const errorMessage = `ERROR: Missing Calendar configuration environment variables: ${missingCalendarVars.join(', ')}.`;
+        console.error(errorMessage);
+        throw new Error(errorMessage);
     }
+    // ----------------------------------------------------
 
     const event = {
       summary: `Call with ${name} (${brand})`,
@@ -95,37 +98,36 @@ export async function POST(req: Request) {
       `,
       start: {
         dateTime: startTime.toISOString(),
-        timeZone: 'Europe/London', // Set the timezone for the event
+        timeZone: 'Europe/London', // Assume your timezone
       },
       end: {
         dateTime: endTime.toISOString(),
-        timeZone: 'Europe/London', // Set the timezone for the event
+        timeZone: 'Europe/London', // Assume your timezone
       },
       attendees: [
-        { email: YOUR_EMAIL_ADDRESS }, // Your email address (host)
-        { email: contactInfo }, // Visitor's email address (attendee, receives invite)
+        { email: YOUR_EMAIL_ADDRESS },
+        { email: contactInfo },
       ],
       reminders: {
         useDefault: false,
         overrides: [
-          { method: 'email', minutes: 60 }, // 1 hour before
-          { method: 'popup', minutes: 10 }, // 10 minutes before
+          { method: 'email', minutes: 60 },
+          { method: 'popup', minutes: 10 },
         ],
       },
-      conferenceData: { // To automatically create a Google Meet link
+      conferenceData: {
         createRequest: {
-          requestId: `meet-${Date.now()}`, // Unique request ID
-          conferenceSolutionKey: { type: 'hangoutsMeet' }, // Creates a Google Meet link
+          requestId: `meet-${Date.now()}`,
+          conferenceSolutionKey: { type: 'hangoutsMeet' },
         },
       },
-      // Optional: Add a specific colorId or other event properties
     };
 
     const response = await calendar.events.insert({
       calendarId: YOUR_CALENDAR_ID,
       requestBody: event,
-      sendUpdates: 'all', // Essential: Sends invites to all attendees (you and the visitor)
-      conferenceDataVersion: 1, // Required for conferenceData
+      sendUpdates: 'all',
+      conferenceDataVersion: 1,
     });
 
     const googleMeetLink = response.data.hangoutLink;
@@ -135,18 +137,24 @@ export async function POST(req: Request) {
       message: 'Booking successful!',
       googleMeetLink,
       eventLink,
-      // You might return other relevant booking details for the thank you page
     }, { status: 200 });
 
   } catch (error: any) {
-    console.error('Error creating Google Calendar event:', error.message);
+    console.error('Error in POST /api/book-call:', error.message);
     if (error.response && error.response.data) {
-      console.error('Google API Error Details:', error.response.data);
+      console.error('Google API Full Error Response:', error.response.data); // More detailed Google error
     }
+    // Return a more specific error message to the frontend if available
+    const clientErrorMessage = error.message.includes('Missing Google API environment variables') ||
+                             error.message.includes('Failed to refresh Google access token') ||
+                             error.message.includes('Missing Calendar configuration environment variables')
+                             ? error.message // Pass the detailed error if it's one of ours
+                             : 'Failed to book call due to a server error.'; // Generic for others
+
     return NextResponse.json({
-      message: 'Failed to book call',
+      message: clientErrorMessage,
       error: error.message,
-      details: error.response?.data?.error // More specific error from Google API
+      details: error.response?.data?.error // Pass Google's error details if available
     }, { status: 500 });
   }
 }
