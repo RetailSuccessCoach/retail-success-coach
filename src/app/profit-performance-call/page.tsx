@@ -1,9 +1,9 @@
 'use client';
 
-import BookingCalendar from './BookingCalendar';
 import MainLayout from '@/components/layout/MainLayout';
 import { ScaleHeading } from '@/components/ui/ScaleHeading';
 import { motion } from 'framer-motion';
+import CalComPage from './calcompage';
 
 export default function ProfitPerformanceCallPage() {
   return (
@@ -18,7 +18,7 @@ export default function ProfitPerformanceCallPage() {
           <ScaleHeading size="3xl" className="mb-8 text-center">
             Book a <span className="scale-gradient-text">Discovery Call</span>
           </ScaleHeading>
-          <BookingCalendar />
+          <CalComPage />
         </motion.div>
       </section>
     </MainLayout>

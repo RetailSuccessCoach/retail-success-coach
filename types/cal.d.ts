@@ -3,7 +3,7 @@ export {};
 
 declare global {
   interface CalNamespace {
-    (command: string, options?: any): void;  // callable signature
+    (command: string, options?: any): void;
     inline: (options: any) => void;
     ui: (options: any) => void;
   }
