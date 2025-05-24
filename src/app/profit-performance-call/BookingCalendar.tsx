@@ -103,12 +103,12 @@ export default function BookingCalendar() {
     if (!googleLoaded) return;
 
     const tokenClient = window.google.accounts.oauth2.initTokenClient({
-      client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
-      scope: 'https://www.googleapis.com/auth/calendar.events',
-      callback: (tokenResponse: any) => {
+    client_id: '500809627522-p32r4us2q4ajakvsehcq3haps1ntra1b.apps.googleusercontent.com',
+    scope: 'https://www.googleapis.com/auth/calendar.events',
+    callback: (tokenResponse: any) => {
         console.log('🔐 Token:', tokenResponse.access_token);
         // You can store the token or use it as needed
-      },
+    },
     });
 
     // Example: Trigger token request on some user action
