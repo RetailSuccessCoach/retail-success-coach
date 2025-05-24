@@ -1,10 +1,9 @@
-// app/book/page.tsx
-'use client'; // This component will run on the client-side
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import dayjs from 'dayjs';
-import 'dayjs/locale/en-gb'; // Or your preferred locale for formatting
+import 'dayjs/locale/en-gb';
 
 export default function BookingPage() {
   const [name, setName] = useState('');
@@ -16,7 +15,6 @@ export default function BookingPage() {
   const [minDateTime, setMinDateTime] = useState('');
   const router = useRouter();
 
-  // Set the minimum date/time after hydration on the client
   useEffect(() => {
     setMinDateTime(dayjs().format('YYYY-MM-DDTHH:mm'));
   }, []);
@@ -26,7 +24,6 @@ export default function BookingPage() {
     setLoading(true);
     setError(null);
 
-    // Client-side validation (basic but important)
     if (!name.trim() || !brand.trim() || !contactInfo.trim() || !selectedDateTime) {
       setError('Please fill in all required fields.');
       setLoading(false);
@@ -69,22 +66,25 @@ export default function BookingPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-6 sm:p-8">
-        <h1 className="text-3xl font-extrabold text-gray-900 mb-6 text-center">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
+      <div className="w-full max-w-md bg-white rounded-xl border border-gray-200 shadow-xl p-8 sm:p-10">
+        <h1 className="text-4xl font-extrabold text-gray-900 mb-8 tracking-tight text-center">
           Book Your Call
         </h1>
 
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
-            <strong className="font-bold">Error!</strong>
+          <div
+            className="bg-red-50 border border-red-400 text-red-700 px-5 py-3 rounded-lg mb-6"
+            role="alert"
+          >
+            <strong className="font-semibold">Error!</strong>
             <span className="block sm:inline ml-2">{error}</span>
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="selectedDateTime" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="selectedDateTime" className="block mb-2 text-sm font-semibold text-gray-700">
               Choose Date & Time
             </label>
             <input
@@ -94,12 +94,12 @@ export default function BookingPage() {
               onChange={(e) => setSelectedDateTime(e.target.value)}
               required
               min={minDateTime}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-blue-500 focus:border-blue-500 text-base"
-              suppressHydrationWarning // Keep this one for the datetime-local input's own hydration logic if needed
+              className="mt-1 block w-full border border-gray-300 rounded-lg bg-gray-50 px-4 py-3 text-base placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+              suppressHydrationWarning
             />
           </div>
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="name" className="block mb-2 text-sm font-semibold text-gray-700">
               Your Name
             </label>
             <input
@@ -109,12 +109,12 @@ export default function BookingPage() {
               onChange={(e) => setName(e.target.value)}
               required
               placeholder="e.g., Jane Doe"
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-blue-500 focus:border-blue-500 text-base"
+              className="mt-1 block w-full border border-gray-300 rounded-lg bg-gray-50 px-4 py-3 text-base placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
               suppressHydrationWarning
             />
           </div>
           <div>
-            <label htmlFor="brand" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="brand" className="block mb-2 text-sm font-semibold text-gray-700">
               Brand/Company
             </label>
             <input
@@ -124,12 +124,12 @@ export default function BookingPage() {
               onChange={(e) => setBrand(e.target.value)}
               required
               placeholder="e.g., Acme Corp"
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-blue-500 focus:border-blue-500 text-base"
+              className="mt-1 block w-full border border-gray-300 rounded-lg bg-gray-50 px-4 py-3 text-base placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
               suppressHydrationWarning
             />
           </div>
           <div>
-            <label htmlFor="contactInfo" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="contactInfo" className="block mb-2 text-sm font-semibold text-gray-700">
               Contact Email
             </label>
             <input
@@ -139,15 +139,15 @@ export default function BookingPage() {
               onChange={(e) => setContactInfo(e.target.value)}
               required
               placeholder="e.g., jane.doe@example.com"
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-blue-500 focus:border-blue-500 text-base"
+              className="mt-1 block w-full border border-gray-300 rounded-lg bg-gray-50 px-4 py-3 text-base placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
               suppressHydrationWarning
             />
           </div>
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white font-semibold py-3 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed text-lg"
-            suppressHydrationWarning // <<< ADDED THIS LINE
+            className="w-full py-4 px-6 bg-blue-600 text-white font-bold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-opacity-50 transition"
+            suppressHydrationWarning
           >
             {loading ? 'Confirming...' : 'Confirm Booking'}
           </button>
