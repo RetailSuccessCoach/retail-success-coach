@@ -19,24 +19,34 @@ const WORKING_HOURS = [
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const date = searchParams.get('date');
-  const duration = parseInt(searchParams.get('duration') || '30', 10);
+  const durationStr = searchParams.get('duration');
+  const duration = parseInt(durationStr || '30', 10);
 
   const authHeader = req.headers.get('authorization');
   const accessToken = authHeader?.replace('Bearer ', '').trim();
 
-  if (!accessToken || !date) {
-    return NextResponse.json({ error: 'Missing token or date' }, { status: 400 });
+  console.log('🧪 API /availability triggered');
+  console.log('🗓 Date:', date);
+  console.log('⏱ Duration:', duration);
+  console.log('🔐 Token Present:', !!accessToken);
+
+  if (!accessToken || !date || isNaN(duration)) {
+    console.error('❌ [E1] Missing token, date, or invalid duration');
+    return NextResponse.json(
+      { error: 'Missing token, date, or invalid duration' },
+      { status: 400 }
+    );
   }
 
-  const oauth2Client = new google.auth.OAuth2();
-  oauth2Client.setCredentials({ access_token: accessToken });
-
-  const calendar = google.calendar({ version: 'v3', auth: oauth2Client });
-
-  const startOfDay = new Date(`${date}T00:00:00`);
-  const endOfDay = new Date(`${date}T23:59:59`);
-
   try {
+    const oauth2Client = new google.auth.OAuth2();
+    oauth2Client.setCredentials({ access_token: accessToken });
+
+    const calendar = google.calendar({ version: 'v3', auth: oauth2Client });
+
+    const startOfDay = new Date(`${date}T00:00:00`);
+    const endOfDay = new Date(`${date}T23:59:59`);
+
     const events = await calendar.events.list({
       calendarId: 'primary',
       timeMin: startOfDay.toISOString(),
@@ -45,20 +55,27 @@ export async function GET(req: NextRequest) {
       orderBy: 'startTime',
     });
 
-    const busySlots = (events.data.items || []).map(event => ({
-      start: new Date(event.start?.dateTime || ''),
-      end: new Date(event.end?.dateTime || ''),
-    }));
+    if (!events.data.items) {
+      console.warn('⚠️ [E2] No event data returned');
+      return NextResponse.json({ available: WORKING_HOURS });
+    }
 
-    const potentialSlots: string[] = [];
+    const busySlots = events.data.items
+      .filter(event => event.start?.dateTime && event.end?.dateTime)
+      .map(event => ({
+        start: new Date(event.start!.dateTime!),
+        end: new Date(event.end!.dateTime!),
+      }));
+
     const baseDate = new Date(date);
+    const potentialSlots: string[] = [];
 
     for (const timeStr of WORKING_HOURS) {
       const slotStart = parseTimeToDate(baseDate, timeStr);
       const slotEnd = new Date(slotStart.getTime() + duration * 60000);
 
       const overlaps = busySlots.some(({ start, end }) =>
-        (slotStart < end && slotEnd > start)
+        slotStart < end && slotEnd > start
       );
 
       if (!overlaps && slotEnd.getHours() < 15) {
@@ -66,13 +83,15 @@ export async function GET(req: NextRequest) {
       }
     }
 
-    // ✅ Diagnostic logs
     console.log('📅 Busy events:', busySlots);
     console.log('✅ Available slots:', potentialSlots);
 
     return NextResponse.json({ available: potentialSlots });
-  } catch (err) {
-    console.error('Availability error:', err);
-    return NextResponse.json({ error: 'Failed to fetch availability' }, { status: 500 });
+  } catch (err: any) {
+    console.error('❌ [E3] Calendar fetch failed:', err?.response?.data || err?.message || err);
+    return NextResponse.json(
+      { error: 'Server error. Please check logs for more info.' },
+      { status: 500 }
+    );
   }
 }
