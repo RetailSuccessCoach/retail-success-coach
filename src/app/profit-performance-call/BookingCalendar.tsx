@@ -45,26 +45,38 @@ export default function BookingCalendar() {
   const { data: session } = useSession();
   const accessToken = session?.accessToken;
 
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
   useEffect(() => {
+    console.log(`📱 Device: ${isMobile ? 'Mobile' : 'Desktop'}`);
     console.log('🧪 Session (live check):', session);
-    console.log('🔐 Access Token (live check):', session?.accessToken);
+    console.log('🔐 Access Token (live check):', accessToken);
   }, [session]);
 
   useEffect(() => {
     if (!selectedDate || !formData.duration || !accessToken) return;
 
     const fetchAvailability = async () => {
-    const isoDate = format(selectedDate, 'yyyy-MM-dd');
-    console.log("🗓 Selected ISO Date:", isoDate); // ✅ Added for debugging
-    const res = await fetch(`/api/availability?date=${isoDate}&duration=${formData.duration}`, {
-        headers: {
-        Authorization: `Bearer ${accessToken}`,
-        },
-    });
-    const data = await res.json();
-    setAvailableTimes(data.available || []);
-    };
+      const isoDate = format(selectedDate, 'yyyy-MM-dd');
+      console.log('🗓 Selected ISO Date:', isoDate);
 
+      try {
+        const res = await fetch(`/api/availability?date=${isoDate}&duration=${formData.duration}`, {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        });
+
+        if (!res.ok) {
+          console.error(`❌ [E1] Availability fetch failed (${res.status})`);
+          return;
+        }
+
+        const data = await res.json();
+        console.log('✅ Fetched available times:', data.available);
+        setAvailableTimes(data.available || []);
+      } catch (error) {
+        console.error('❌ [E2] Availability fetch error:', error);
+      }
+    };
 
     fetchAvailability();
   }, [selectedDate, formData.duration, accessToken]);
@@ -74,27 +86,34 @@ export default function BookingCalendar() {
     setLoading(true);
 
     if (!accessToken) {
-      alert("You're not signed in or your access token is missing.");
+      alert("❌ [E3] You're not signed in or your access token is missing.");
       setLoading(false);
       return;
     }
 
-    const res = await fetch('/api/book-call', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify(formData),
-    });
+    try {
+      const res = await fetch('/api/book-call', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify(formData),
+      });
 
-    const data = await res.json();
-    if (data.success) {
-    window.location.href = "/thank-you";
-    } else {
-    alert('Something went wrong. Please try again.');
+      const data = await res.json();
+
+      if (data.success) {
+        console.log('✅ Booking success – redirecting to thank-you page');
+        window.location.href = '/thank-you';
+      } else {
+        console.error('❌ [E4] Booking API returned failure:', data);
+        alert('Something went wrong. Please try again.');
+      }
+    } catch (error) {
+      console.error('❌ [E5] Booking error:', error);
+      alert('Booking failed. Please check your network or try again.');
     }
-
 
     setLoading(false);
   };
@@ -102,17 +121,19 @@ export default function BookingCalendar() {
   useEffect(() => {
     if (!googleLoaded) return;
 
-    const tokenClient = window.google.accounts.oauth2.initTokenClient({
-    client_id: '500809627522-p32r4us2q4ajakvsehcq3haps1ntra1b.apps.googleusercontent.com',
-    scope: 'https://www.googleapis.com/auth/calendar.events',
-    callback: (tokenResponse: any) => {
-        console.log('🔐 Token:', tokenResponse.access_token);
-        // You can store the token or use it as needed
-    },
-    });
+    try {
+      const tokenClient = window.google.accounts.oauth2.initTokenClient({
+        client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
+        scope: 'https://www.googleapis.com/auth/calendar.events',
+        callback: (tokenResponse: any) => {
+          console.log('🔐 Token:', tokenResponse.access_token);
+        },
+      });
 
-    // Example: Trigger token request on some user action
-    // tokenClient.requestAccessToken();
+      // Optionally trigger tokenClient.requestAccessToken() here
+    } catch (error) {
+      console.error('❌ [E6] Google API init failed:', error);
+    }
   }, [googleLoaded]);
 
   return (
@@ -121,7 +142,7 @@ export default function BookingCalendar() {
         src="https://accounts.google.com/gsi/client"
         strategy="afterInteractive"
         onLoad={() => {
-          console.log("✅ Google API script loaded");
+          console.log('✅ Google API script loaded');
           setGoogleLoaded(true);
         }}
       />
@@ -130,31 +151,12 @@ export default function BookingCalendar() {
         <div className="text-center bg-white p-6 rounded-xl shadow max-w-lg mx-auto space-y-4">
           <h2 className="text-2xl font-semibold">🎉 Booking Confirmed</h2>
           <p>Thanks, {confirmation.name}! Your call is booked for:</p>
-          <p className="font-medium">
-            {confirmation.date} at {confirmation.time}
-          </p>
-          <p>
-            🔗{' '}
-            <a href={confirmation.meetLink} target="_blank" className="text-blue-600 underline">
-              Join Google Meet
-            </a>
-          </p>
+          <p className="font-medium">{confirmation.date} at {confirmation.time}</p>
+          <p>🔗 <a href={confirmation.meetLink} target="_blank" className="text-blue-600 underline">Join Google Meet</a></p>
 
           <div className="flex justify-center gap-4 mt-4 flex-wrap">
-            <a
-              href={confirmation.calendarLinks.google}
-              target="_blank"
-              className="bg-blue-600 text-white px-4 py-2 rounded"
-            >
-              Add to Google Calendar
-            </a>
-            <a
-              href={confirmation.calendarLinks.outlook}
-              target="_blank"
-              className="bg-gray-700 text-white px-4 py-2 rounded"
-            >
-              Add to Outlook
-            </a>
+            <a href={confirmation.calendarLinks.google} target="_blank" className="bg-blue-600 text-white px-4 py-2 rounded">Add to Google Calendar</a>
+            <a href={confirmation.calendarLinks.outlook} target="_blank" className="bg-gray-700 text-white px-4 py-2 rounded">Add to Outlook</a>
           </div>
         </div>
       ) : (
@@ -162,9 +164,7 @@ export default function BookingCalendar() {
           <div className="space-y-2 text-center">
             <h2 className="text-2xl font-bold">Lauren Percival</h2>
             <p className="text-lg font-semibold text-gray-700">Profit Strategy Call</p>
-            <p className="text-sm text-gray-500">
-              Discuss your profit leaks, pricing or performance in a private consult.
-            </p>
+            <p className="text-sm text-gray-500">Discuss your profit leaks, pricing or performance in a private consult.</p>
             <p className="text-xs text-gray-400">Europe/London timezone</p>
           </div>
 
@@ -173,9 +173,7 @@ export default function BookingCalendar() {
               <button
                 key={dur}
                 onClick={() => setFormData({ ...formData, duration: dur })}
-                className={`min-w-[60px] px-4 py-2 text-sm rounded-full border ${
-                  formData.duration === dur ? 'bg-black text-white' : 'bg-zinc-100 text-black'
-                }`}
+                className={`min-w-[60px] px-4 py-2 text-sm rounded-full border ${formData.duration === dur ? 'bg-black text-white' : 'bg-zinc-100 text-black'}`}
               >
                 {dur}m
               </button>
@@ -199,15 +197,12 @@ export default function BookingCalendar() {
           {availableTimes.length > 0 ? (
             <div className="mt-6">
               <p className="font-semibold mb-2">Available Times:</p>
-
               <div className="flex flex-wrap gap-2">
                 {availableTimes.map((time) => (
                   <button
                     key={time}
                     onClick={() => setFormData({ ...formData, time })}
-                    className={`px-4 py-2 border rounded text-sm ${
-                      formData.time === time ? 'bg-black text-white' : 'bg-zinc-100'
-                    }`}
+                    className={`px-4 py-2 border rounded text-sm ${formData.time === time ? 'bg-black text-white' : 'bg-zinc-100'}`}
                   >
                     {time}
                   </button>
@@ -217,7 +212,7 @@ export default function BookingCalendar() {
           ) : (
             selectedDate && (
               <p className="text-sm text-gray-500 mt-4">
-                No times available for the selected date.
+                ❌ [E7] No times available for the selected date.
               </p>
             )
           )}
