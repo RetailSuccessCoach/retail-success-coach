@@ -1,7 +1,12 @@
+// app/thank-you/page.tsx
 'use client';
 
 import { useSearchParams } from 'next/navigation';
 import dayjs from 'dayjs';
+import 'dayjs/locale/en-gb';
+
+// Add this line to prevent static generation of this page
+export const dynamic = 'force-dynamic'; // Ensures this page is rendered on demand, not at build time.
 
 export default function ThankYouPage() {
   const searchParams = useSearchParams();
