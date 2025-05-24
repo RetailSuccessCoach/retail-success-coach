@@ -87,11 +87,21 @@ export async function GET(req: NextRequest) {
     console.log('✅ Available slots:', potentialSlots);
 
     return NextResponse.json({ available: potentialSlots });
-  } catch (err: any) {
-    console.error('❌ [E3] Calendar fetch failed:', err?.response?.data || err?.message || err);
-    return NextResponse.json(
-      { error: 'Server error. Please check logs for more info.' },
-      { status: 500 }
-    );
+} catch (err: any) {
+  console.error('❌ [E3] Calendar fetch failed');
+  if (err.response?.data) {
+    console.error('📩 Google API Error Data:', err.response.data);
   }
+  if (err.message) {
+    console.error('📣 Error Message:', err.message);
+  }
+  if (err.stack) {
+    console.error('🧵 Stack Trace:', err.stack);
+  }
+
+  return NextResponse.json({
+    error: 'Calendar fetch failed',
+    details: err.message || 'Unknown error',
+  }, { status: 500 });
+}
 }
