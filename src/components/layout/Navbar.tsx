@@ -37,15 +37,16 @@ export default function Navbar() {
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       >
         <div className="container mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center">
-            <Image
-              src="/Retail-Success-Logo.png"
-              alt="The Retail Success Coach Logo"
-              width={160}
-              height={40}
-              priority
-            />
-          </Link>
+  <Link href="/" className="flex items-center">
+    <Image
+      src="/Retail-Success-Logo.png"
+      alt="The Retail Success Coach Logo"
+      width={200}
+      height={60}
+      priority
+      className="h-10 sm:h-12 w-auto object-contain"
+    />
+  </Link>
 
           <div className="hidden lg:flex items-center space-x-8">
             {navDropdowns.map((dropdown) => (

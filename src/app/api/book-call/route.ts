@@ -50,8 +50,8 @@ export async function POST(req: Request) {
   }
 
   try {
-    // Destructure `duration` from the request body
-    const { name, brand, contactInfo, selectedDateTime, duration } = await req.json();
+    // <--- UPDATED: Destructure `message` from the request body
+    const { name, brand, contactInfo, selectedDateTime, duration, message } = await req.json();
 
     // Basic server-side validation
     if (!name || !brand || !contactInfo || !selectedDateTime || !duration) {
@@ -64,7 +64,6 @@ export async function POST(req: Request) {
     if (!parsedDateTime.isValid() || parsedDateTime.isBefore(dayjs())) {
         return NextResponse.json({ message: 'Invalid or past date/time selected.' }, { status: 400 });
     }
-    // Validate duration
     const parsedDuration = parseInt(duration, 10);
     if (isNaN(parsedDuration) || ![15, 30, 45, 60].includes(parsedDuration)) {
         return NextResponse.json({ message: 'Invalid call duration selected.' }, { status: 400 });
@@ -73,7 +72,6 @@ export async function POST(req: Request) {
     const calendar = await getAuthenticatedCalendarClient();
 
     const startTime = parsedDateTime.toDate();
-    // Calculate endTime using the provided duration
     const endTime = parsedDateTime.add(parsedDuration, 'minute').toDate();
 
     const YOUR_EMAIL_ADDRESS = process.env.YOUR_EMAIL_ADDRESS;
@@ -90,15 +88,16 @@ export async function POST(req: Request) {
     }
 
     const event = {
-      summary: `Call with ${name} (${brand}) - ${parsedDuration} Minutes`, // Include duration in summary
+      summary: `Call with ${name} (${brand}) - ${parsedDuration} Minutes`,
       description: `
         Visitor Name: ${name}
         Brand: ${brand}
         Contact Email: ${contactInfo}
         Call Duration: ${parsedDuration} minutes
+        ${message ? `Message: ${message}` : ''} // <--- NEW: Conditionally add message to description
         ---
         Please refer to this booking.
-      `, // Include duration in description
+      `,
       start: {
         dateTime: startTime.toISOString(),
         timeZone: 'Europe/London', // Assume your timezone
