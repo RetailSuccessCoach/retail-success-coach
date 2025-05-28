@@ -81,7 +81,7 @@ export default function HeroSection() {
             transition={{ delay: 0.2 }}
             className="text-lg sm:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto px-4"
           >
-            We help founder-led brands unlock hidden profit by benchmarking performance, identifying margin leaks, and building data-backed plans that scale - sustainably.
+            We help brands unlock hidden profit by benchmarking performance, identifying margin leaks, and building data-backed plans that scale - sustainably.
           </motion.p>
 
           <motion.div

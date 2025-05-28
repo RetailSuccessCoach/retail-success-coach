@@ -92,7 +92,7 @@ export default function HowItWorksPage() {
             <div>
               <h2 className="text-2xl font-semibold mb-2">Step 4: Delivery & Walkthrough</h2>
               <p className="text-zinc-400">
-                We don’t just send you a deck — we take you through it in detail. You'll receive a branded PDF with strategic priorities segmented into: Fix / Scale / Stop. No fluff. Just the roadmap.
+                We don’t just send you a deck - we take you through it in detail. You'll receive a branded PDF with strategic priorities segmented into: Fix / Scale / Stop. No fluff. Just the roadmap.
               </p>
               <p className="text-zinc-400 mt-3">
                 Every output is built to be executed by a founder, in-house team, or external agency with no ambiguity.
