@@ -12,7 +12,7 @@ export default function WhyChannelyticsSection() {
           transition={{ delay: 0.1 }}
           className="text-4xl md:text-5xl font-bold mb-6"
         >
-          Plan for Profitable Growth This Q4
+          Plan for Profitable Growth
         </motion.h2>
 
         <motion.p
@@ -21,7 +21,7 @@ export default function WhyChannelyticsSection() {
           transition={{ delay: 0.2 }}
           className="text-lg text-zinc-400 max-w-2xl mx-auto mb-16"
         >
-          Most retail brands are flying blind on profit. We fix that. Our Q4-focused strategies help founder-led brands scale with clarity – not chaos. Built around performance, margin and what actually moves the needle.
+          Most retail brands are flying blind on profit. We fix that. Our hyper-focused strategies help founder-led brands scale with clarity – not chaos. Built around performance, margin and what actually moves the needle.
         </motion.p>
 
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">

@@ -4,7 +4,6 @@ import MainLayout from "@/components/layout/MainLayout";
 
 type Package = {
   name: string;
-  price: string;
   bestFor: string;
   items: string[];
   cta?: string;
@@ -28,7 +27,6 @@ const packages: PackageSection[] = [
     packages: [
       {
         name: "Profit Pulse Check",
-        price: "£295",
         bestFor: "Quick profit leak detection",
         link: "/ecommerce-profit-audit",
         items: [
@@ -46,9 +44,8 @@ const packages: PackageSection[] = [
     packages: [
       {
         name: "Second Opinion: Channel Performance Review",
-        price: "£750",
         bestFor: "Founders reviewing agency or channel waste",
-        link: "/second-opinion-channel-audit",
+        link: "/second-opinion-audit",
         items: [
           "Channel-by-channel performance review",
           "Benchmarks for ROAS, CAC, LTV vs sector",
@@ -59,7 +56,6 @@ const packages: PackageSection[] = [
       },
       {
         name: "Profit Ratio Audit",
-        price: "£1,250",
         bestFor: "Challenging your agency or internal strategy",
         link: "/profit-ratio-audit",
         items: [
@@ -72,7 +68,6 @@ const packages: PackageSection[] = [
       },
       {
         name: "LTV-Backed Scale Plan",
-        price: "£2,950",
         bestFor: "Founders & teams ready to scale profitably",
         link: "/lifetime-value-backed-scale-plan",
         items: [
@@ -86,12 +81,29 @@ const packages: PackageSection[] = [
     ]
   },
   {
+    title: "Forecasting & Commercial Planning",
+    description: "Strategic forecasting delivered in-house – not a plug-and-play template. Built on analyst-grade logic, tailored to your targets, and delivered as a clean, client-ready file.",
+    packages: [
+      {
+        name: "Profit Forecast Tracker",
+        bestFor: "Brands who want a clear view of monthly profit performance without building the backend",
+        link: "/profit-forecast-tracker",
+        items: [
+          "Strategic Excel forecast built from your inputs – no setup required",
+          "Actual vs Pro-Rated view of profit by channel",
+          "Sessions, CVR, AOV, spend, ROI – all mapped to your current trading patterns",
+          "Delivered one-off or monthly, tailored to targets and budget planning",
+          "Includes walkthrough call or Loom, plus 30-min Q&A session"
+        ]
+      }
+    ]
+  },
+  {
     title: "Revenue-to-Profit Planning",
     description: "Done-for-you 12-month growth plans - rooted in your financial goals, designed to turn media into margin. This is fractional CSO thinking, delivered in full.",
     packages: [
       {
         name: "Q4 Profit Planning Sprint",
-        price: "£1,950",
         bestFor: "Peak season planning without the chaos",
         link: "/q4-profit-planning-sprint",
         items: [
@@ -104,7 +116,6 @@ const packages: PackageSection[] = [
       },
       {
         name: "Revenue-to-Profit Blueprint",
-        price: "From £7,500",
         bestFor: "Brands scaling from 6 to 8 figures",
         link: "/revenue-to-profit-blueprint",
         items: [
@@ -127,7 +138,6 @@ const packages: PackageSection[] = [
     packages: [
       {
         name: "Essentials Launch Plan",
-        price: "£3,750",
         bestFor: "Launching with financial clarity",
         link: "/essentials-launch-planning",
         items: [
@@ -140,7 +150,6 @@ const packages: PackageSection[] = [
       },
       {
         name: "Full-Funnel Profit Launch",
-        price: "£6,950",
         bestFor: "Brands with paid, DTC + wholesale ambitions",
         link: "/Full-Funnel-Profit-Launch-for-eCommerce",
         items: [
@@ -153,7 +162,6 @@ const packages: PackageSection[] = [
       },
       {
         name: "Bespoke Investor Plan",
-        price: "From £9,950",
         bestFor: "Investor, pitch deck or acquisition planning",
         link: "/bespoke-investor-plan",
         items: [
@@ -188,16 +196,15 @@ const DigitalStrategyPackagesPage = () => {
 
               {packages.map((section) => (
       <div key={section.title} className="mt-12">
-        <h2 className="text-2xl font-semibold text-white mb-2">{section.title}</h2>
+        <h2 className="text-2xl font-semibold text-zinc-800 mb-2">{section.title}</h2>
         <p className="text-zinc-700 mb-4">{section.description}</p>
 
         {/* Desktop Table */}
         <div className="hidden md:block overflow-x-auto">
           <table className="min-w-full table-fixed border border-zinc-700 text-left text-sm md:text-base">
-            <thead className="bg-zinc-800 text-white">
+            <thead className="bg-zinc-100 text-black">
               <tr>
                 <th className="p-4 w-1/6">Package</th>
-                <th className="p-4 w-1/12">Price</th>
                 <th className="p-4 w-1/5">Best For</th>
                 <th className="p-4 w-1/2">What You Get</th>
                 <th className="p-4 w-1/6">Availability</th>
@@ -216,7 +223,6 @@ const DigitalStrategyPackagesPage = () => {
                 pkg.name
               )}
             </td>
-                    <td className="p-4">{pkg.price}</td>
                     <td className="p-4">{pkg.bestFor}</td>
                     <td className="p-4">
                       <ul className="list-disc list-inside space-y-1">
@@ -246,8 +252,7 @@ const DigitalStrategyPackagesPage = () => {
         <div className="md:hidden space-y-6">
           {section.packages.map((pkg) => (
             <div key={pkg.name} className="border border-zinc-700 rounded-xl p-4 bg-zinc-900">
-              <h3 className="text-lg font-semibold text-white mb-1">{pkg.name} <span className="text-zinc-400 font-normal">({pkg.price})</span></h3>
-              <p className="text-sm text-zinc-300 italic mb-3">{pkg.bestFor}</p>
+                  <p className="text-sm text-zinc-300 italic mb-3">{pkg.bestFor}</p>
               <ul className="list-disc list-inside text-sm text-zinc-300 space-y-1 mb-4">
                 {pkg.items.map((item) => (
                   <li key={item}>{item}</li>
@@ -295,4 +300,3 @@ const DigitalStrategyPackagesPage = () => {
 };
 
 export default DigitalStrategyPackagesPage;
-

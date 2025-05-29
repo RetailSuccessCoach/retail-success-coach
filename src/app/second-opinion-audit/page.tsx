@@ -83,7 +83,6 @@ export default function SecondOpinionAuditPage() {
           {/* CTA */}
           <div className="text-center">
             <p className="text-sm text-zinc-600 mb-3">
-              One-off investment: <span className="text-black font-medium">£750</span>
             </p>
             <a
               href="/profit-performance-call"

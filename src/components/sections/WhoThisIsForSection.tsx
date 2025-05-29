@@ -19,7 +19,7 @@ export default function WhoThisIsForSection() {
         </motion.h2>
 
         <p className="text-lg md:text-xl text-zinc-600 mb-12 max-w-3xl mx-auto">
-          Whether you're in-house, founder-led or scaling fast – we work best with retail brands who want smarter campaigns, tighter margins, and a clearer path to growth this Q4.
+          Whether you're in-house, founder-led or scaling fast – we work best with retail brands who want smarter campaigns, tighter margins, and a clearer path to growth.
         </p>
 
         <div className="grid md:grid-cols-3 gap-8 text-left">

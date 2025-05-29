@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import { Search, Tag } from "lucide-react";
+import BlogCard from "@/components/BlogCard";
 
 const categories = [
   "All",
@@ -55,7 +56,7 @@ export default function BlogPage() {
 
   if (!isClient) return null;
 
-  const filteredPosts = blogPosts.filter(post => {
+  const filteredPosts = blogPosts.filter((post) => {
     const matchesCategory = activeCategory === "All" || post.category === activeCategory;
     const matchesSearch =
       post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -65,20 +66,19 @@ export default function BlogPage() {
 
   return (
     <MainLayout>
-      <div className="pt-32 pb-16 bg-white text-gray-900 min-h-screen">
-        <div className="max-w-6xl mx-auto px-4">
+      <div className="bg-white text-gray-900">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Hero Section */}
-          <div className="text-center max-w-2xl mx-auto mb-12">
+          <div className="text-center max-w-2xl mx-auto mb-12 pt-16">
             <h1 className="text-4xl font-extrabold mb-4">Retail Success Insights</h1>
             <p className="text-gray-600 text-lg">
               No fluff. Just sharp strategy, growth insights, and the frameworks behind scale.
             </p>
 
-            {/* Search Input */}
+            {/* Search */}
             <div className="mt-6 relative">
               <input
                 type="text"
-                autoComplete="off"
                 placeholder="Search articles..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -88,10 +88,10 @@ export default function BlogPage() {
             </div>
           </div>
 
-          {/* Category Filters */}
+          {/* Categories */}
           <div className="mb-10 flex flex-wrap justify-center gap-3">
             <Tag className="text-gray-400 w-4 h-4 mt-1" />
-            {categories.map(cat => (
+            {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
@@ -107,39 +107,9 @@ export default function BlogPage() {
           </div>
 
           {/* Blog Cards */}
-          <div className="grid gap-8">
+          <div className="space-y-10">
             {filteredPosts.map((post) => (
-              <div
-                key={post.id}
-                className="flex flex-col md:flex-row bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow"
-              >
-                {/* Image Placeholder */}
-                <div className="md:w-2/5 p-6 flex items-center justify-center border-b md:border-b-0 md:border-r border-gray-200 rounded-t-xl md:rounded-l-xl md:rounded-tr-none bg-gray-50">
-                  <img
-                    src={post.image}
-                    alt={post.title}
-                    className="w-full object-contain rounded-md"
-                  />
-                </div>
-
-                {/* Text Content */}
-                <div className="flex-1 p-6 flex flex-col justify-between">
-                  <div>
-                    <p className="text-sm text-gray-500">{post.date}</p>
-                    <h3 className="text-xl font-semibold text-gray-900 mt-1 mb-2">{post.title}</h3>
-                    <p className="text-gray-600 text-sm">{post.excerpt}</p>
-                  </div>
-                  <div className="mt-4 flex items-center gap-2 text-sm text-gray-500">
-                    <img
-                      src="/images/avatar-lauren.png"
-                      className="w-6 h-6 rounded-full"
-                      alt="Lauren"
-                    />
-                    <span className="font-medium text-gray-800">Lauren</span>
-                    <span>• #{post.category.toLowerCase()}</span>
-                  </div>
-                </div>
-              </div>
+              <BlogCard key={post.id} post={post} />
             ))}
           </div>
 

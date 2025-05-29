@@ -42,7 +42,9 @@ export default function RootLayout({
           }}
         />
       </head>
-      <ClientBody>{children}</ClientBody>
+      <body className="antialiased">
+        <ClientBody>{children}</ClientBody>
+      </body>
     </html>
   );
 }

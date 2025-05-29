@@ -95,7 +95,6 @@ export default function LTVBackedScalePlanPage() {
           {/* CTA */}
           <div className="text-center">
             <p className="text-sm text-zinc-600 mb-3">
-              One-off investment: <span className="text-black font-medium">£2,950</span>
             </p>
             <a
               href="/ltv-backed-scale-call"

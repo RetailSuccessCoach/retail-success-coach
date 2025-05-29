@@ -20,7 +20,7 @@ export default function WhatWeLookAtSection() {
           transition={{ delay: 0.2 }}
           className="text-zinc-400 text-lg md:text-xl mb-12"
         >
-          We audit your full digital ecosystem - not just for visibility, but to drive decisive action. If it’s dragging down ROAS, killing margin, or blocking scale, we’ll find it, fix it, and fuel your Q4 performance.
+          We audit your full digital ecosystem - not just for visibility, but to drive decisive action. If it’s dragging down ROAS, killing margin, or blocking scale, we’ll find it, fix it, and fuel your website performance.
         </motion.p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 text-left">

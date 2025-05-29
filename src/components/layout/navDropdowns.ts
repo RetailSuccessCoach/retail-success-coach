@@ -78,12 +78,18 @@ const solutionsDropdown: NavDropdown = {
       title: "Profit Checks",
       items: [
         {
+          title: "Profit Forecast Tracker",
+          description: "Clean Excel file showing pacing vs. profit targets",
+          href: "/profit-forecast-tracker",
+        },
+        {
           title: "Profit Pulse Check",
           description: "Quick snapshot of margin and spend health",
           href: "/ecommerce-profit-audit",
         }
       ],
     }
+
   ]
 };
 

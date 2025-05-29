@@ -98,7 +98,6 @@ export default function BespokeInvestorPlanPage() {
           {/* CTA */}
           <div className="text-center">
             <p className="text-sm text-zinc-600 mb-3">
-              Starting from <span className="text-black font-medium">£9,950</span>
             </p>
             <a
               href="/bespoke-investor-plan-call"

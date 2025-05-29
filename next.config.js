@@ -1,3 +1,7 @@
+const withMDX = require('@next/mdx')({
+  extension: /\.mdx?$/,
+});
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -37,6 +41,7 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'mdx'], // 👈 Includes .mdx as valid pages
   async redirects() {
     return [
       {
@@ -53,4 +58,5 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+// 👇 Wrap and export the final config with MDX support
+module.exports = withMDX(nextConfig);

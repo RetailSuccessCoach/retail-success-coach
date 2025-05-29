@@ -98,7 +98,7 @@ export default function FullFunnelProfitLaunchPage() {
           {/* CTA */}
           <div className="text-center">
             <p className="text-sm text-zinc-600 mb-3">
-              One-off investment: <span className="text-black font-medium">£6,950</span>
+         
             </p>
             <a
               href="/full-funnel-profit-launch-call"

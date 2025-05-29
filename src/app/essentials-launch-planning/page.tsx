@@ -98,7 +98,6 @@ export default function InvestorGradeLaunchPlanningPage() {
           {/* CTA */}
           <div className="text-center">
             <p className="text-sm text-zinc-600 mb-3">
-              One-off investment: <span className="text-black font-medium">£3,750</span>
             </p>
             <a
               href="/investor-grade-launch-call"
