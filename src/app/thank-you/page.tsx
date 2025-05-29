@@ -7,7 +7,7 @@ import ThankYouContent from './ThankYouContent'; // Import the new client compon
 
 // You can keep export const dynamic = 'force-dynamic'; here as a safety measure,
 // although Suspense is the primary fix for the useSearchParams error.
-// export const dynamic = 'force-dynamic';
+export const dynamic = 'force-dynamic';
 
 export default function ThankYouPage() {
   return (
