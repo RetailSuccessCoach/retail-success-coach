@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import NotFoundClient from "../components/NotFoundClient";
+import NotFoundClient from "../components/NotFoundClient"; // ✅ use relative path for now
 
 export default function NotFound() {
   return (
@@ -8,4 +8,3 @@ export default function NotFound() {
     </Suspense>
   );
 }
-
