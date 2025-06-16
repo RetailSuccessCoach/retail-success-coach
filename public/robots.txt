@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.retailsuccesscoach.com
+
+# Sitemaps
+Sitemap: https://www.retailsuccesscoach.com/sitemap.xml
